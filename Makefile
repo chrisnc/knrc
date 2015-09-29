@@ -4,7 +4,8 @@ TARGETS = \
 	hello \
 	temperature \
 	chario \
-	wc
+	wc \
+	array
 
 all: $(TARGETS)
 
