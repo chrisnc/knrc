@@ -1,7 +1,7 @@
 #include <stdio.h>
 
-#define IN   1 // inside a word
-#define OUT  0 // outside a word
+#define IN 1  // inside a word
+#define OUT 0 // outside a word
 
 void wc(void)
 {
@@ -59,6 +59,6 @@ void one_word_per_line(void)
 
 int main(void)
 {
-  //wc();
+  // wc();
   one_word_per_line();
 }

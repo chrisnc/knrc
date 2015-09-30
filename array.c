@@ -138,6 +138,6 @@ void char_histogram(void)
 
 int main(void)
 {
-  //word_length_histogram();
+  // word_length_histogram();
   char_histogram();
 }

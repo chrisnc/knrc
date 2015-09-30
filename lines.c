@@ -94,13 +94,15 @@ void delete_blanks(void)
     {
       line[i] = '\0';
     }
-    if (i == -1) // all characters except the newline were removed, so delete this line
+    if (i == -1) // all characters except the newline were removed, so delete
+                 // this line
     {
       continue;
     }
     /*
      * re-set the newline after deleting characters
-     * if no characters were deleted, i + 1 == len - 1, and line[len - 1] is already the newline
+     * if no characters were deleted, i + 1 == len - 1, and line[len - 1] is
+     * already the newline
      */
     line[i + 1] = '\n';
     printf("%s", line);
