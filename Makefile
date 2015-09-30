@@ -6,7 +6,8 @@ TARGETS = \
 	chario \
 	wc \
 	array \
-	power
+	power \
+	maxline
 
 all: $(TARGETS)
 
