@@ -7,7 +7,7 @@ TARGETS = \
 	wc \
 	array \
 	power \
-	maxline
+	lines
 
 all: $(TARGETS)
 
