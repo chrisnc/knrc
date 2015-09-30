@@ -48,7 +48,7 @@ int my_getline(char s[], int lim)
   {
     s[i] = '\0';
   }
-  else
+  else if (lim > 0)
   {
     s[lim - 1] = '\0';
   }
@@ -109,9 +109,35 @@ void delete_blanks(void)
   }
 }
 
+// Exercise 1-19.
+void reverse(char s[], int len)
+{
+  int half_len = len / 2;
+  for (int i = 0; i < half_len; ++i)
+  {
+    int j = len - i - 1;
+    char tmp = s[i];
+    s[i] = s[j];
+    s[j] = tmp;
+  }
+}
+
+void reverse_lines(void)
+{
+  int len;
+  char line[MAXLINE];
+
+  while ((len = my_getline(line, MAXLINE)) > 0)
+  {
+    reverse(line, len - 1); // leave the '\n' in the last position
+    printf("%s", line);
+  }
+}
+
 int main(void)
 {
   // get_max_line();
   // print_over_80_chars();
-  delete_blanks();
+  // delete_blanks();
+  reverse_lines();
 }
