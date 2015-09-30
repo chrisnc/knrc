@@ -5,7 +5,8 @@ TARGETS = \
 	temperature \
 	chario \
 	wc \
-	array
+	array \
+	power
 
 all: $(TARGETS)
 
