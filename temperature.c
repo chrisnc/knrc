@@ -7,6 +7,9 @@ void celsius_to_fahr_floats(void);
 void fahr_to_celsius_for(void);
 void fahr_to_celsius_for_reverse(void);
 
+float fahr_to_celsius(float f);
+float celsius_to_fahr(float f);
+
 #define LOWER 0   /* lower limit of temperature scale */
 #define UPPER 300 /* upper limit */
 #define STEP 20   /* step size */
@@ -45,7 +48,7 @@ void fahr_to_celsius_floats(void)
   fahr = LOWER;
   while (fahr <= UPPER)
   {
-    celsius = (5.0 / 9.0) * (fahr - 32.0);
+    celsius = fahr_to_celsius(fahr);
     printf("%3.0f %6.1f\n", fahr, celsius);
     fahr = fahr + STEP;
   }
@@ -54,15 +57,14 @@ void fahr_to_celsius_floats(void)
 // Exercise 1-4.
 void celsius_to_fahr_floats(void)
 {
-  float fahr, celsius;
+  float celsius;
 
   printf(" ˚C     ˚F\n");
 
   celsius = LOWER;
   while (celsius <= UPPER)
   {
-    fahr = (celsius * (9.0 / 5.0)) + 32.0;
-    printf("%3.0f %6.1f\n", celsius, fahr);
+    printf("%3.0f %6.1f\n", celsius, celsius_to_fahr(celsius));
     celsius = celsius + STEP;
   }
 }
@@ -73,7 +75,7 @@ void fahr_to_celsius_for(void)
 
   for (fahr = LOWER; fahr <= UPPER; fahr = fahr + STEP)
   {
-    printf("%3d %6.1f\n", fahr, (5.0 / 9.0) * (fahr - 32));
+    printf("%3d %6.1f\n", fahr, fahr_to_celsius(fahr));
   }
 }
 
@@ -84,6 +86,17 @@ void fahr_to_celsius_for_reverse(void)
 
   for (fahr = UPPER; fahr >= LOWER; fahr = fahr - STEP)
   {
-    printf("%3d %6.1f\n", fahr, (5.0 / 9.0) * (fahr - 32));
+    printf("%3d %6.1f\n", fahr, fahr_to_celsius(fahr));
   }
+}
+
+// Exercise 1-15.
+float fahr_to_celsius(float f)
+{
+  return (5.0 / 9.0) * (f - 32.0);
+}
+
+float celsius_to_fahr(float c)
+{
+  return (c * (9.0 / 5.0)) + 32.0;
 }
