@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <limits.h>
 
 void count_digits_and_whitespace(void)
 {
@@ -76,7 +77,7 @@ void word_length_histogram(void)
       ++nc;
     }
   }
-  printf("length\n");
+  printf("length frequency\n");
   for (int i = 0; i <= MAX_WORD_LEN; ++i)
   {
     printf("%6d ", i);
@@ -94,7 +95,49 @@ void word_length_histogram(void)
   putchar('\n');
 }
 
+// Exercise 1-14.
+void char_histogram(void)
+{
+  const int N_CHARS = 1 << (sizeof(char) * CHAR_BIT);
+  int c;
+  int hist[N_CHARS];
+  for (int i = 0; i < N_CHARS; ++i)
+  {
+    hist[i] = 0;
+  }
+
+  printf("N_CHARS = %d\n", N_CHARS);
+
+  while ((c = getchar()) != EOF)
+  {
+    printf("found a %c\n", c);
+    ++hist[(unsigned char)c];
+  }
+  printf("char   frequency\n");
+  for (int i = 0; i < N_CHARS; ++i)
+  {
+    if (i < 32) // below SPC
+    {
+      printf("\\x%-4x", i);
+    }
+    else if (i >= 127) // DEL and above
+    {
+      continue;
+    }
+    else
+    {
+      printf("%-6c", (char)i);
+    }
+    for (int n = 0; n < hist[i]; ++n)
+    {
+      putchar('#');
+    }
+    putchar('\n');
+  }
+}
+
 int main(void)
 {
-  word_length_histogram();
+  //word_length_histogram();
+  char_histogram();
 }
