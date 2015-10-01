@@ -93,10 +93,10 @@ void fahr_to_celsius_for_reverse(void)
 // Exercise 1-15.
 float fahr_to_celsius(float f)
 {
-  return (5.0 / 9.0) * (f - 32.0);
+  return (5.0f / 9.0f) * (f - 32.0f);
 }
 
 float celsius_to_fahr(float c)
 {
-  return (c * (9.0 / 5.0)) + 32.0;
+  return (c * (9.0f / 5.0f)) + 32.0f;
 }
