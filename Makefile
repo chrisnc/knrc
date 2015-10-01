@@ -7,7 +7,10 @@ TARGETS = \
 	wc \
 	array \
 	power \
-	lines
+	lines \
+	maxline_extern \
+	detab \
+	entab
 
 all: $(TARGETS)
 
