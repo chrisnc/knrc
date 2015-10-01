@@ -10,7 +10,8 @@ TARGETS = \
 	lines \
 	maxline_extern \
 	detab \
-	entab
+	entab \
+	fold
 
 all: $(TARGETS)
 
