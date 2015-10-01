@@ -12,7 +12,8 @@ TARGETS = \
 	detab \
 	entab \
 	fold \
-	decomment
+	decomment \
+	simplecheck
 
 all: $(TARGETS)
 
