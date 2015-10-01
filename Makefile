@@ -16,4 +16,4 @@ all: $(TARGETS)
 
 .PHONY: clean
 clean:
-	$(RM) -f $(TARGETS)
+	$(RM) $(TARGETS)
