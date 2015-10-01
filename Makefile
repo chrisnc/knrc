@@ -11,7 +11,8 @@ TARGETS = \
 	maxline_extern \
 	detab \
 	entab \
-	fold
+	fold \
+	decomment
 
 all: $(TARGETS)
 
