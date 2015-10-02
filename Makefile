@@ -13,7 +13,8 @@ TARGETS = \
 	entab \
 	fold \
 	decomment \
-	simplecheck
+	simplecheck \
+	limits
 
 all: $(TARGETS)
 
