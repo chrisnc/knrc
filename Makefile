@@ -16,8 +16,8 @@ TARGETS = \
 	simplecheck \
 	limits
 
+.PHONY: all clean
 all: $(TARGETS)
 
-.PHONY: clean
 clean:
 	$(RM) $(TARGETS)
