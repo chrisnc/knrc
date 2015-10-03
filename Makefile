@@ -17,7 +17,8 @@ TARGETS = \
 	limits \
 	misc \
 	atoi \
-	strs
+	strs \
+	bits
 
 .PHONY: all clean
 all: $(TARGETS)
