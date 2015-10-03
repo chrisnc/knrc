@@ -14,7 +14,9 @@ TARGETS = \
 	fold \
 	decomment \
 	simplecheck \
-	limits
+	limits \
+	misc \
+	atoi
 
 .PHONY: all clean
 all: $(TARGETS)
