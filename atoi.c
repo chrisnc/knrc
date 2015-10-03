@@ -12,14 +12,11 @@ int my_atoi(const char s[])
   return n;
 }
 
-// lower: convert c to lower case; ASCII only
+// Exercise 2-10.
+// lower: convert c to lower case; ASCII only, using ?:
 int my_lower(int c)
 {
-  if (c >= 'A' && c <= 'Z')
-  {
-    c += 'a' - 'A';
-  }
-  return c;
+  return (c >= 'A' && c <= 'Z') ? c + 'a' - 'A' : c;
 }
 
 // Exercise 2-3.
