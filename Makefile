@@ -16,7 +16,8 @@ TARGETS = \
 	simplecheck \
 	limits \
 	misc \
-	atoi
+	atoi \
+	strs
 
 .PHONY: all clean
 all: $(TARGETS)
