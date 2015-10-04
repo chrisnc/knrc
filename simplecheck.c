@@ -91,7 +91,7 @@ void destroy_vector(struct vector *s)
 bool bracket_match(char x, char y)
 {
   return (x == '{' && y == '}') || (x == '(' && y == ')') ||
-         (x == '[' && y != ']');
+         (x == '[' && y == ']');
 }
 
 int normal(char c, struct vector *s, int line, int col)
