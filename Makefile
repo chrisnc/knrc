@@ -1,25 +1,26 @@
-CFLAGS= -std=c99 -Wall -Wextra -Wpedantic -Werror
+CFLAGS = -std=c99 -Wall -Wextra -Wpedantic -Werror
 
 TARGETS = \
-	hello \
-	temperature \
-	chario \
-	wc \
 	array \
-	power \
-	lines \
-	maxline_extern \
+	atoi \
+	bits \
+	chario \
+	control \
+	decomment \
 	detab \
 	entab \
 	fold \
-	decomment \
-	simplecheck \
+	hello \
 	limits \
+	lines \
+	maxline_extern \
 	misc \
-	atoi \
+	power \
+	simplecheck \
 	strs \
-	bits \
-	control
+	switch \
+	temperature \
+	wc
 
 .PHONY: all clean
 all: $(TARGETS)
