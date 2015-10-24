@@ -59,6 +59,6 @@ void one_word_per_line(void)
 
 int main(void)
 {
-  // wc();
-  one_word_per_line();
+  wc();
+  // one_word_per_line();
 }

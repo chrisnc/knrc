@@ -1,4 +1,4 @@
-CFLAGS= -std=c99 -Wall -Werror
+CFLAGS= -std=c99 -Wall -Wextra -Wpedantic -Werror
 
 TARGETS = \
 	hello \
@@ -18,7 +18,8 @@ TARGETS = \
 	misc \
 	atoi \
 	strs \
-	bits
+	bits \
+	control
 
 .PHONY: all clean
 all: $(TARGETS)

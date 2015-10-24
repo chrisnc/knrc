@@ -200,16 +200,6 @@ int in_char_lit(char c)
   }
 }
 
-int string_escape(char c)
-{
-  return IN_STRING;
-}
-
-int char_lit_escape(char c)
-{
-  return IN_CHAR_LIT;
-}
-
 // Exercise 1-23.
 int main(void)
 {
@@ -245,10 +235,10 @@ int main(void)
       state = in_char_lit(c);
       break;
     case STRING_ESCAPE:
-      state = string_escape(c);
+      state = IN_STRING;
       break;
     case CHAR_LIT_ESCAPE:
-      state = char_lit_escape(c);
+      state = IN_CHAR_LIT;
       break;
     default:
       printf("error, unknown state: %d\n", state);
