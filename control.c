@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 
 // binsearch: find x in v[0] <= v[1] <= ... <= v[n-1]
 int binsearch(int x, int v[], int n)
@@ -47,6 +48,17 @@ int binsearch_2(int x, int v[], int n)
   return (x == v[mid]) ? mid : -1;
 }
 
+// reverse: reverse string s in place
+void reverse(char s[])
+{
+  for (int i = 0, j = strlen(s) - 1; i < j; ++i, --j)
+  {
+    int c = s[i];
+    s[i] = s[j];
+    s[j] = c;
+  }
+}
+
 int main(void)
 {
   static const int n = 10000;
@@ -61,4 +73,10 @@ int main(void)
     (void) binsearch(x, v, n);
   }
   free(v);
+
+  char s[] = "This is a string.";
+  printf("%s\n", s);
+  reverse(s);
+  printf("%s\n", s);
+  return 0;
 }
