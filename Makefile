@@ -17,6 +17,7 @@ TARGETS = \
 	maxline_extern \
 	misc \
 	power \
+	shellsort \
 	simplecheck \
 	strs \
 	switch \
