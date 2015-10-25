@@ -48,8 +48,7 @@ int main(void)
     line[len - 1] = '\0'; // delete newline
     expanded = realloc(expanded, len * EXPAND_FACTOR + 1);
     expand(expanded, line);
-    printf("line = %s\n", line);
-    printf("expanded = %s\n", expanded);
+    printf("%s\n", expanded);
   }
   free(line);
   free(expanded);
