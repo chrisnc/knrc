@@ -1,3 +1,4 @@
+MAKEFLAGS = -j 4
 CFLAGS = -std=c99 -Wall -Wextra -Wpedantic -Werror
 
 TARGETS = \
