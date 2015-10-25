@@ -97,12 +97,29 @@ void fixed_itoa(int n, char *s)
   int i = 0;
   do
   {
-    int digit = n % 10;
-    digit = digit < 0 ? -digit : digit;
-    s[i++] = digit + '0';
+    s[i++] = abs(n % 10) + '0';
   }
-  while ((n /= 10) != 0);
+  while ((n /= 10));
 
+  if (is_negative)
+  {
+    s[i++] = '-';
+  }
+  s[i] = '\0';
+  reverse(s);
+}
+
+// Exercise 3-5.
+void itob(int n, char *s, int b)
+{
+  bool is_negative = n < 0;
+  int i = 0;
+  do
+  {
+    int digit = abs(n % b);
+    s[i++] = (digit < 10) ? digit + '0' : (digit - 10) + 'a';
+  }
+  while ((n /= b));
   if (is_negative)
   {
     s[i++] = '-';
@@ -135,7 +152,12 @@ int main(void)
   my_itoa(-9000, itoas);
   printf("%s\n", itoas);
   fixed_itoa(INT_MIN, itoas);
-  printf("fixed_itoa(%d) = %s\n", INT_MIN, itoas);
+  printf("fixed_itoa(%d) = \"%s\"\n", INT_MIN, itoas);
+
+  char itobs[100];
+  int x = INT_MIN;
+  itob(x, itobs, 16);
+  printf("itob(%d) = \"%s\"\n", x, itobs);
 
   return 0;
 }
