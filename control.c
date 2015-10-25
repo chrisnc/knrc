@@ -1,6 +1,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <limits.h>
+#include <stdbool.h>
 
 // binsearch: find x in v[0] <= v[1] <= ... <= v[n-1]
 int binsearch(int x, int v[], int n)
@@ -59,6 +61,56 @@ void reverse(char s[])
   }
 }
 
+// itoa from page 64
+void my_itoa(int n, char s[])
+{
+  int sign;
+  if ((sign = n) < 0) // record sign
+  {
+    n = -n;
+  }
+  int i = 0;
+  do
+  {
+    s[i++] = n % 10 + '0';
+  }
+  while ((n /= 10) > 0);
+  if (sign < 0)
+  {
+    s[i++] = '-';
+  }
+  s[i] = '\0';
+  reverse(s);
+}
+
+/*
+ * Exercise 3-4.
+ *
+ * On a two's complement system, computing -n of the largest negative number,
+ * -(2^{wordsize - 1}), will overflow, rather than produce 2^{wordsize - 1},
+ * which is not representable.
+ */
+
+void fixed_itoa(int n, char *s)
+{
+  bool is_negative = n < 0;
+  int i = 0;
+  do
+  {
+    int digit = n % 10;
+    digit = digit < 0 ? -digit : digit;
+    s[i++] = digit + '0';
+  }
+  while ((n /= 10) != 0);
+
+  if (is_negative)
+  {
+    s[i++] = '-';
+  }
+  s[i] = '\0';
+  reverse(s);
+}
+
 int main(void)
 {
   static const int n = 10000;
@@ -78,5 +130,12 @@ int main(void)
   printf("%s\n", s);
   reverse(s);
   printf("%s\n", s);
+
+  char itoas[100];
+  my_itoa(-9000, itoas);
+  printf("%s\n", itoas);
+  fixed_itoa(INT_MIN, itoas);
+  printf("fixed_itoa(%d) = %s\n", INT_MIN, itoas);
+
   return 0;
 }
