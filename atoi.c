@@ -41,6 +41,26 @@ int my_htoi(const char s[])
   return n;
 }
 
+// new atoi from page 54
+int newatoi(char s[])
+{
+  int i;
+  for (i = 0; isspace(s[i]); ++i) // skip whitespace
+  {
+  }
+  int sign = (s[i] == '-') ? -1 : 1;
+  if (s[i] == '+' || s[i] == '-') // skip sign
+  {
+    ++i;
+  }
+  int n;
+  for (n = 0; isdigit(s[i]); ++i)
+  {
+    n = 10 * n + (s[i] - '0');
+  }
+  return sign * n;
+}
+
 int main(void)
 {
   const char *s = "100";
