@@ -2,6 +2,8 @@
 #include <stdlib.h>
 #include <ctype.h>
 
+// Exercise 3-3.
+
 // longest range is a-z which expands 3 characters into 26
 #define EXPAND_FACTOR 9
 

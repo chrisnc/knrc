@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-// Exercise 1-21
+// Exercise 1-21.
 
 #define TABSTOP 8
 
