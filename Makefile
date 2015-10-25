@@ -10,6 +10,7 @@ TARGETS = \
 	decomment \
 	detab \
 	entab \
+	expand \
 	fold \
 	hello \
 	limits \
