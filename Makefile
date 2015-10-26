@@ -1,5 +1,5 @@
 MAKEFLAGS = -j 4
-CFLAGS = -std=c99 -Wall -Wextra -Wpedantic -Werror
+CFLAGS = -Wall -Wextra -Wpedantic -Werror
 
 TARGETS = \
 	array \
