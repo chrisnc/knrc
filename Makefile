@@ -1,5 +1,5 @@
 MAKEFLAGS = -j 4
-CFLAGS = -Wall -Wextra -Wpedantic -Werror
+CFLAGS = -Wall -Wextra -Wpedantic -Werror -O3
 
 TARGETS = \
 	array \
