@@ -95,10 +95,11 @@ void word_length_histogram(void)
   putchar('\n');
 }
 
+#define N_CHARS (1 << (sizeof(char) * CHAR_BIT))
+
 // Exercise 1-14.
 void char_histogram(void)
 {
-  const int N_CHARS = 1 << (sizeof(char) * CHAR_BIT);
   int c;
   int hist[N_CHARS];
   for (int i = 0; i < N_CHARS; ++i)
