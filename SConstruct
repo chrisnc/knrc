@@ -1,5 +1,7 @@
 # SConstruct
 
+import os
+
 env = Environment(
     CFLAGS = [
         '-Wall',
@@ -9,6 +11,9 @@ env = Environment(
         '-O3',
     ],
 )
+
+if 'TERM' in os.environ:
+    env['ENV']['TERM'] = os.environ['TERM']
 
 env.VariantDir('build', 'src', duplicate = False)
 
