@@ -4,7 +4,7 @@
 #include <stdlib.h>
 #include <string.h>
 
-// Exercise 1-24.
+// Exercise 1-24. page 34
 
 struct char_info
 {
@@ -200,7 +200,6 @@ int in_char_lit(char c)
   }
 }
 
-// Exercise 1-23.
 int main(void)
 {
   int c;

@@ -29,12 +29,12 @@ void wc(void)
 }
 
 /*
- * Exercise 1-11.
+ * Exercise 1-11. page 21
  * Feeding the wc program random inputs, or generating random inputs with
  * a sufficient mix of ' ', '\n', and '\t' characters.
  */
 
-// Exercise 1-12.
+// Exercise 1-12. page 21
 void one_word_per_line(void)
 {
   int state = OUT;

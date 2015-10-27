@@ -42,7 +42,7 @@ void fahr_to_celsius_floats(void)
 {
   float fahr, celsius;
 
-  // Exercise 1-3.
+  // Exercise 1-3. page 13
   printf(" ˚F     ˚C\n");
 
   fahr = LOWER;
@@ -54,7 +54,7 @@ void fahr_to_celsius_floats(void)
   }
 }
 
-// Exercise 1-4.
+// Exercise 1-4. page 13
 void celsius_to_fahr_floats(void)
 {
   float celsius;
@@ -79,7 +79,7 @@ void fahr_to_celsius_for(void)
   }
 }
 
-// Exercise 1-5.
+// Exercise 1-5. page 14
 void fahr_to_celsius_for_reverse(void)
 {
   int fahr;
@@ -90,7 +90,7 @@ void fahr_to_celsius_for_reverse(void)
   }
 }
 
-// Exercise 1-15.
+// Exercise 1-15. page 27
 float fahr_to_celsius(float f)
 {
   return (5.0f / 9.0f) * (f - 32.0f);

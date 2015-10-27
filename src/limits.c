@@ -2,7 +2,8 @@
 #include <limits.h>
 #include <stdio.h>
 
-// Exercise 2-1.
+// Exercise 2-1. page 36
+
 int main(void)
 {
   printf("CHAR_MIN = %d, CHAR_MAX = %d\n", CHAR_MIN, CHAR_MAX);

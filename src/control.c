@@ -29,7 +29,7 @@ int binsearch(int x, int v[], int n)
   return -1;
 }
 
-// Exercise 3-1.
+// Exercise 3-1. page 58
 int binsearch_2(int x, int v[], int n)
 {
   int low = 0;
@@ -84,13 +84,12 @@ void my_itoa(int n, char s[])
 }
 
 /*
- * Exercise 3-4.
+ * Exercise 3-4. page 64
  *
  * On a two's complement system, computing -n of the largest negative number,
  * -(2^{wordsize - 1}), will overflow, rather than produce 2^{wordsize - 1},
  * which is not representable.
  */
-
 void fixed_itoa(int n, char *s)
 {
   bool is_negative = n < 0;
@@ -109,7 +108,7 @@ void fixed_itoa(int n, char *s)
   reverse(s);
 }
 
-// Exercise 3-5.
+// Exercise 3-5. page 64
 void itob(int n, char *s, int b)
 {
   bool is_negative = n < 0;
@@ -128,7 +127,7 @@ void itob(int n, char *s, int b)
   reverse(s);
 }
 
-// Exercise 3-6.
+// Exercise 3-6. page 64
 void itoa_padded(int n, char *s, int min_width)
 {
   bool is_negative = n < 0;

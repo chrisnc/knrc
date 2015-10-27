@@ -28,7 +28,7 @@ void my_strcat(char s[], char t[])
   }
 }
 
-// Exercise 2-4.
+// Exercise 2-4. page 48
 void squeeze_str(char s[], char e[])
 {
   int i, j;
@@ -51,7 +51,7 @@ void squeeze_str(char s[], char e[])
   s[j] = '\0';
 }
 
-// Exercise 2-5.
+// Exercise 2-5. page 48
 int any(const char s[], const char t[])
 {
   for (int i = 0; s[i] != '\0'; ++i)

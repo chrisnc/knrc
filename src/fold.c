@@ -1,9 +1,10 @@
 #include <stdio.h>
 
+// Exercise 1-22. page 34
+
 #define LINE_LENGTH 80
 #define TAB_STOP 8
 
-// Exercise 1-22.
 int main(void)
 {
   int current_line_length = 0;

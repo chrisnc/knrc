@@ -1,5 +1,7 @@
 #include <stdio.h>
 
+// Exercise 1-23. page 34
+
 #define NO_COMMENT 0
 #define OPENING_SLASH 1
 #define C_COMMENT 2
@@ -115,7 +117,6 @@ int char_lit_escape(char c)
   return IN_CHAR_LIT;
 }
 
-// Exercise 1-23.
 int main(void)
 {
   int c;

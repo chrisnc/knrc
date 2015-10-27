@@ -23,14 +23,14 @@ void copy_in_to_out(void)
   }
 }
 
-// Exercise 1-6.
+// Exercise 1-6. page 17
 void getchar_eof_compare(void)
 {
   printf("%d\n", getchar() != EOF);
   printf("%d\n", getchar() != EOF);
 }
 
-// Exercise 1-7.
+// Exercise 1-7. page 17
 void value_of_eof(void)
 {
   printf("%d\n", EOF);
@@ -71,7 +71,7 @@ void count_lines(void)
   printf("%d\n", nl);
 }
 
-// Exercise 1-8.
+// Exercise 1-8. page 20
 void count_whitespace(void)
 {
   int c, nw;
@@ -86,7 +86,7 @@ void count_whitespace(void)
   printf("%d\n", nw);
 }
 
-// Exercise 1-9.
+// Exercise 1-9. page 20
 void copy_remove_dup_whitespace(void)
 {
   int c;
@@ -102,7 +102,7 @@ void copy_remove_dup_whitespace(void)
   }
 }
 
-// Exercise 1-10.
+// Exercise 1-10. page 20
 void copy_escape(void)
 {
   int c;

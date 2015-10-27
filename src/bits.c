@@ -8,7 +8,7 @@ unsigned getbits(unsigned x, int p, int n)
   return (x >> p) & ~(~0 << n);
 }
 
-// Exercise 2-6.
+// Exercise 2-6. page 49
 // set the n bits in x starting at position p with the first n bits of y
 unsigned setbits(unsigned x, int p, int n, unsigned y)
 {
@@ -16,14 +16,14 @@ unsigned setbits(unsigned x, int p, int n, unsigned y)
   return (x & ~mask) | ((y << p) & mask);
 }
 
-// Exercise 2-7.
+// Exercise 2-7. page 49
 // invert the n bits in x starting at position p
 unsigned invert(unsigned x, int p, int n)
 {
   return x ^ (((~0 >> p) << p) & ~(~0 << (n + p)));
 }
 
-// Exercise 2-8.
+// Exercise 2-8. page 49
 // returns x rotated right by n positions
 unsigned rightrot(unsigned x, int n)
 {
@@ -50,23 +50,34 @@ int bitcount(unsigned x)
   return b;
 }
 
-// Exercise 2-9.
-// popcnt, faster version of bitcount
-// With x unsigned, x &= x - 1 deletes the rightmost 1-bit in x.
-// This is because the rightmost 1-bit will either be in the zero'th position
-// in which case subtracting 1 simply sets it to zero and leaves other bits
-// unchanged (and &'ing with x leaves this bit unset and the other bits
-// unchanged), or it is in some higher position with all lower-order bits zero,
-// in which case subtracting 1 sets this bit to zero and all previous bits to
-// 1. &'ing this with the original x sets all of these bits to zero, since the
-// rightmost 1 was set to zero in (x - 1), and the lower order bits were all
-// zero in x itself.
+/*
+ * Exercise 2-9. page 51
+ * popcnt, faster version of bitcount
+ * With x unsigned, x &= x - 1 deletes the rightmost 1-bit in x.
+ * If the rightmost bit is 1, subtracting 1 sets the rightmost bit to 0 and
+ * leaves the other bits unchanged. Bitwise and of this number and the original
+ * is equal to x with the rightmost bit set to 0.
+ *
+ *  x           = 11100101111
+ *       x - 1  = 11100101110
+ *  x & (x - 1) = 11100101110
+ *
+ * If the rightmost 1 bit is in some higher position with all lower-order bits 0,
+ * subtracting 1 sets all the lower-order bits to 1 due to borrowing subtraction,
+ * and the higher position 1 bit is set to 0.
+ * A bitwise & of this number with the original x sets all of these bits to
+ * 0, since the rightmost 1 was set to zero in (x - 1), and the lower order
+ * bits were all zero in x itself.
+ *
+ *  x           = 11100110000
+ *       x - 1  = 11100101111
+ *  x & (x - 1) = 11100100000
+ */
 int popcnt(unsigned x)
 {
-  int b = 0;
-  while (x)
+  int b;
+  for (b = 0; x; ++b)
   {
-    ++b;
     x &= x - 1;
   }
   return b;

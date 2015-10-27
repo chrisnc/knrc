@@ -43,7 +43,7 @@ int count_digits(void) // count digits, white space, others
   return 0;
 }
 
-// Exercise 3-2.
+// Exercise 3-2. page 60
 int escape(char *s, const char *t)
 {
   int n = 0;

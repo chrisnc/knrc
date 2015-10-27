@@ -36,7 +36,7 @@ void count_digits_and_whitespace(void)
   printf(", white space = %d, other = %d\n", nwhite, nother);
 }
 
-// Exercise 1-13.
+// Exercise 1-13. page 24
 
 #define MAX_WORD_LEN 20
 #define IN 1
@@ -97,7 +97,7 @@ void word_length_histogram(void)
 
 #define N_CHARS (1 << (sizeof(char) * CHAR_BIT))
 
-// Exercise 1-14.
+// Exercise 1-14. page 24
 void char_histogram(void)
 {
   int c;

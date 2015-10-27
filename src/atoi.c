@@ -12,14 +12,7 @@ int my_atoi(const char s[])
   return n;
 }
 
-// Exercise 2-10.
-// lower: convert c to lower case; ASCII only, using ?:
-int my_lower(int c)
-{
-  return (c >= 'A' && c <= 'Z') ? c + 'a' - 'A' : c;
-}
-
-// Exercise 2-3.
+// Exercise 2-3. page 46
 int my_htoi(const char s[])
 {
   int n = 0;
@@ -39,6 +32,13 @@ int my_htoi(const char s[])
     n = 0x10 * n + next_digit;
   }
   return n;
+}
+
+// Exercise 2-10. page 52
+// lower: convert c to lower case; ASCII only, using ?:
+int my_lower(int c)
+{
+  return (c >= 'A' && c <= 'Z') ? c + 'a' - 'A' : c;
 }
 
 // new atoi from page 54

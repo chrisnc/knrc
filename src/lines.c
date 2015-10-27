@@ -30,9 +30,10 @@ void get_max_line(void)
   }
 }
 
+// Exercise 1-16. page 30
 // getline: read a line into s, return length
-// Exercise 1-16. modified to return the actual length of the line, even if it
-// was longer than lim-1
+// modified to return the actual length of the line, even if it was longer than
+// lim-1
 int my_getline(char s[], int lim)
 {
   int c = 0, i;
@@ -65,7 +66,7 @@ void copy(char to[], char from[])
   }
 }
 
-// Exercise 1-17.
+// Exercise 1-17. page 31
 void print_over_80_chars(void)
 {
 
@@ -81,7 +82,7 @@ void print_over_80_chars(void)
   }
 }
 
-// Exercise 1-18.
+// Exercise 1-18. page 31
 void delete_blanks(void)
 {
   int len;
@@ -109,7 +110,7 @@ void delete_blanks(void)
   }
 }
 
-// Exercise 1-19.
+// Exercise 1-19. page 31
 void reverse(char s[], int len)
 {
   int half_len = len / 2;
