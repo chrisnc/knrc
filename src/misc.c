@@ -1,10 +1,10 @@
 #include <stdio.h>
 
 // Exercise 2-2. page 42
-void simple_loop(char s[], int lim)
+void simple_loop(char s[], size_t lim)
 {
   int c;
-  for (int i = 0; i < lim - 1; ++i)
+  for (size_t i = 0; i < lim - 1; ++i)
   {
     c = getchar();
     if (c == '\n')
@@ -15,7 +15,7 @@ void simple_loop(char s[], int lim)
     {
       break;
     }
-    s[i] = c;
+    s[i] = (char) c;
   }
 }
 

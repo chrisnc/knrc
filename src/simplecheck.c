@@ -35,7 +35,7 @@ void *get(struct vector *s, size_t i)
 {
   if (i >= s->n_elems)
   {
-    fprintf(stderr, "get for index %lu out of range, size: %lu\n", i,
+    fprintf(stderr, "get for index %zu out of range, size: %zu\n", i,
             s->n_elems);
     exit(1);
   }
@@ -94,7 +94,7 @@ bool bracket_match(char x, char y)
          (x == '[' && y == ']');
 }
 
-int normal(char c, struct vector *s, int line, int col)
+int normal(int c, struct vector *s, int line, int col)
 {
   switch (c)
   {
@@ -108,9 +108,10 @@ int normal(char c, struct vector *s, int line, int col)
   case '[':
   case '(':
   {
-    struct char_info ci = {
-        .c = c, .line = line, .col = col,
-    };
+    struct char_info ci;
+    ci.c = (char) c;
+    ci.line = line;
+    ci.col = col;
     push_back(s, &ci);
     break;
   }
@@ -121,7 +122,7 @@ int normal(char c, struct vector *s, int line, int col)
     {
       struct char_info *ci = back(s);
       pop_back(s);
-      if (!bracket_match(ci->c, c))
+      if (!bracket_match(ci->c, (char) c))
       {
         printf("line %d, col %d: '%c' is not closed, unexpected '%c' on "
                "line %d, col %d\n",
@@ -138,7 +139,7 @@ int normal(char c, struct vector *s, int line, int col)
   return NORMAL;
 }
 
-int opening_slash(char c)
+int opening_slash(int c)
 {
   switch (c)
   {
@@ -151,12 +152,12 @@ int opening_slash(char c)
   }
 }
 
-int c_comment(char c)
+int c_comment(int c)
 {
   return c == '*' ? CLOSING_STAR : C_COMMENT;
 }
 
-int closing_star(char c)
+int closing_star(int c)
 {
   switch (c)
   {
@@ -169,12 +170,12 @@ int closing_star(char c)
   }
 }
 
-int line_comment(char c)
+int line_comment(int c)
 {
   return c == '\n' ? NORMAL : LINE_COMMENT;
 }
 
-int in_string(char c)
+int in_string(int c)
 {
   switch (c)
   {
@@ -187,7 +188,7 @@ int in_string(char c)
   }
 }
 
-int in_char_lit(char c)
+int in_char_lit(int c)
 {
   switch (c)
   {

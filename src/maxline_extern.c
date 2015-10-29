@@ -2,18 +2,18 @@
 
 #define MAXLINE 1000 // maximum input line size
 
-int max; // maximum length seen so far
+size_t max; // maximum length seen so far
 char line[MAXLINE]; // current input line
 char longest[MAXLINE]; // longest line saved here
 
-int getline_extern(void);
+size_t getline_extern(void);
 void copy_extern(void);
 
 // print longest input line; specialized version
 int main(void)
 {
-  int len;
-  extern int max;
+  size_t len;
+  extern size_t max;
   extern char longest[];
 
   max = 0;
@@ -32,13 +32,15 @@ int main(void)
 }
 
 // getline: specialized version
-int getline_extern(void)
+size_t getline_extern(void)
 {
-  int c = 0, i;
   extern char line[];
+
+  int c = 0;
+  size_t i;
   for (i = 0; i < MAXLINE - 1 && c != '\n' && (c = getchar()) != EOF; ++i)
   {
-    line[i] = c;
+    line[i] = (char) c;
   }
   line[i] = '\0';
   return i;
@@ -49,7 +51,7 @@ void copy_extern(void)
 {
   extern char line[], longest[];
 
-  int i = 0;
+  size_t i = 0;
   while ((longest[i] = line[i]) != '\0')
   {
     ++i;

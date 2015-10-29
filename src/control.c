@@ -53,9 +53,10 @@ int binsearch_2(int x, int v[], int n)
 // reverse: reverse string s in place
 void reverse(char s[])
 {
-  for (int i = 0, j = strlen(s) - 1; i < j; ++i, --j)
+  size_t n = strlen(s);
+  for (size_t i = 0, j = n - 1; i < n / 2; ++i, --j)
   {
-    int c = s[i];
+    char c = s[i];
     s[i] = s[j];
     s[j] = c;
   }
@@ -96,7 +97,7 @@ void fixed_itoa(int n, char *s)
   int i = 0;
   do
   {
-    s[i++] = abs(n % 10) + '0';
+    s[i++] = (char) ('0' + abs(n % 10));
   }
   while ((n /= 10));
 
@@ -116,7 +117,7 @@ void itob(int n, char *s, int b)
   do
   {
     int digit = abs(n % b);
-    s[i++] = (digit < 10) ? digit + '0' : (digit - 10) + 'a';
+    s[i++] = (char) ((digit < 10) ? digit + '0' : (digit - 10) + 'a');
   }
   while ((n /= b));
   if (is_negative)
@@ -134,7 +135,7 @@ void itoa_padded(int n, char *s, int min_width)
   int i = 0;
   do
   {
-    s[i++] = abs(n % 10) + '0';
+    s[i++] = (char) ('0' + abs(n % 10));
   }
   while ((n /= 10));
 
@@ -183,7 +184,7 @@ int main(void)
   int z = -10;
   itoa_padded(z, s, 10);
   printf("itoa_padded(%d, s, 10); s = %s\n", z, s);
-  printf("len(s) = %lu\n", strlen(s));
+  printf("len(s) = %zu\n", strlen(s));
 
   return 0;
 }

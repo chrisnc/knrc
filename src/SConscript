@@ -2,15 +2,13 @@
 
 import os
 
-env = Environment(
-    CFLAGS = [
-        '-Wall',
-        '-Wextra',
-        '-Wpedantic',
-        '-Werror',
-        '-O3',
-    ],
-)
+env = Environment()
+
+if env['PLATFORM'] in ['linux','darwin']:
+    env.Append(CFLAGS = ['-Wall', '-Wextra', '-Wpedantic', '-Werror', '-O3'])
+
+if env['PLATFORM'] == 'win32':
+    env.Append(CFLAGS = ['/W4', '/WX', '/Ox'])
 
 if 'TERM' in os.environ:
     env['ENV']['TERM'] = os.environ['TERM']

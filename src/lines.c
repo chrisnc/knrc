@@ -9,8 +9,8 @@ void copy(char to[], char from[]);
 // print the longest input line
 void get_max_line(void)
 {
-  int len;               // current line length
-  int max;               // maximum length seen so far
+  size_t len;            // current line length
+  size_t max;            // maximum length seen so far
   char line[MAXLINE];    // current input line
   char longest[MAXLINE]; // longest line saved here
 
@@ -25,7 +25,7 @@ void get_max_line(void)
   }
   if (max > 0) // there was a line
   {
-    printf("the longest line was %d characters\n", max);
+    printf("the longest line was %zu characters\n", max);
     printf("%s", longest);
   }
 }
@@ -41,7 +41,7 @@ int my_getline_ex_1_16(char s[], int lim)
   {
     if (i < lim - 1)
     {
-      s[i] = c;
+      s[i] = (char) c;
     }
   }
   if (i < lim)
@@ -68,8 +68,7 @@ void copy(char to[], char from[])
 // Exercise 1-17. page 31
 void print_over_80_chars(void)
 {
-
-  int len;
+  size_t len;
   char line[MAXLINE];
 
   while ((len = my_getline(line, MAXLINE)) > 0)
@@ -84,38 +83,42 @@ void print_over_80_chars(void)
 // Exercise 1-18. page 31
 void delete_blanks(void)
 {
-  int len;
+  size_t len;
   char line[MAXLINE];
 
   while ((len = my_getline(line, MAXLINE)) > 0)
   {
-    int i;
-    for (i = len - 2; i >= 0 && (line[i] == ' ' || line[i] == '\t'); --i)
+    int line_is_blank = 0;
+    size_t i;
+    /*
+     * Start from the end of the line and delete whitespace. We also delete the
+     * newline here to avoid the bookkeeping of starting at len - 2. This would
+     * incur a special case for the line "\n" where len - 2 overflows.
+     */
+    for (i = len - 1; line[i] == ' ' || line[i] == '\t' || line[i] == '\n'; --i)
     {
       line[i] = '\0';
+      if (i == 0)
+      {
+        line_is_blank = 1;
+        break;
+      }
     }
-    if (i == -1) // all characters except the newline were removed, so delete
-                 // this line
+    if (!line_is_blank)
     {
-      continue;
+      // we deleted the newline before, so re-add it in printf
+      printf("%s\n", line);
     }
-    /*
-     * re-set the newline after deleting characters
-     * if no characters were deleted, i + 1 == len - 1, and line[len - 1] is
-     * already the newline
-     */
-    line[i + 1] = '\n';
-    printf("%s", line);
   }
 }
 
 // Exercise 1-19. page 31
-void reverse(char s[], int len)
+void reverse(char s[], size_t len)
 {
-  int half_len = len / 2;
-  for (int i = 0; i < half_len; ++i)
+  size_t half_len = len / 2;
+  for (size_t i = 0; i < half_len; ++i)
   {
-    int j = len - i - 1;
+    size_t j = len - i - 1;
     char tmp = s[i];
     s[i] = s[j];
     s[j] = tmp;
@@ -124,7 +127,7 @@ void reverse(char s[], int len)
 
 void reverse_lines(void)
 {
-  int len;
+  size_t len;
   char line[MAXLINE];
 
   while ((len = my_getline(line, MAXLINE)) > 0)

@@ -11,7 +11,7 @@
 void expand(char *d, const char *s)
 {
   char begin;
-  while ((begin = *d++ = *s++))
+  while ((begin = *d++ = *s++) != '\0')
   {
     // '-' can't begin a range, and if the next character isn't '-' we aren't
     // in a range
