@@ -1,0 +1,44 @@
+# SConscript
+
+import os
+
+env = Environment(
+    CFLAGS = [
+        '-Wall',
+        '-Wextra',
+        '-Wpedantic',
+        '-Werror',
+        '-O3',
+    ],
+)
+
+if 'TERM' in os.environ:
+    env['ENV']['TERM'] = os.environ['TERM']
+
+programs = [
+    'array',
+    'atoi',
+    'bits',
+    'chario',
+    'control',
+    'decomment',
+    'detab',
+    'entab',
+    'expand',
+    'fold',
+    'hello',
+    'limits',
+    'lines',
+    'maxline_extern',
+    'misc',
+    'power',
+    'shellsort',
+    'simplecheck',
+    'strs',
+    'switch',
+    'temperature',
+    'wc',
+]
+
+for p in programs:
+    env.Program(p, [p + '.c'])
