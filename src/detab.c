@@ -1,24 +1,24 @@
 #include <stdio.h>
-#include <stdlib.h>
+
+#include "getline.h"
 
 // Exercise 1-20. page 34
 
 #define TABSTOP 8
+#define MAXLINE 1000
 
 int main(void)
 {
-  size_t n = 0;
-  char *line = NULL;
-  ssize_t len;
-
-  while ((len = getline(&line, &n, stdin)) != -1)
+  char line[MAXLINE];
+  size_t len;
+  while ((len = my_getline(line, MAXLINE)) > 0)
   {
     int col = 0;
-    for (ssize_t i = 0; i < len; ++i)
+    for (size_t i = 0; i < len; ++i)
     {
       if (line[i] == '\t')
       {
-        for (ssize_t rem = TABSTOP - (col % TABSTOP); rem > 0; --rem)
+        for (size_t rem = TABSTOP - (col % TABSTOP); rem > 0; --rem)
         {
           ++col;
           putchar(' ');
@@ -31,5 +31,4 @@ int main(void)
       }
     }
   }
-  free(line);
 }

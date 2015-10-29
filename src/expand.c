@@ -1,6 +1,7 @@
 #include <stdio.h>
-#include <stdlib.h>
 #include <ctype.h>
+
+#include "getline.h"
 
 // Exercise 3-3. page 63
 
@@ -36,20 +37,18 @@ void expand(char *d, const char *s)
   }
 }
 
+#define MAXLINE 100
+
 int main(void)
 {
-  size_t n = 0;
-  char *line = NULL;
-  ssize_t len;
-  char *expanded = NULL;
+  char line[MAXLINE];
+  char expanded[MAXLINE * EXPAND_FACTOR + 1];
+  size_t len;
 
-  while ((len = getline(&line, &n, stdin)) != -1)
+  while ((len = my_getline(line, MAXLINE)) > 0)
   {
     line[len - 1] = '\0'; // delete newline
-    expanded = realloc(expanded, len * EXPAND_FACTOR + 1);
     expand(expanded, line);
     printf("%s\n", expanded);
   }
-  free(line);
-  free(expanded);
 }

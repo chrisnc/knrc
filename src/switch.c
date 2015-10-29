@@ -1,5 +1,6 @@
 #include <stdio.h>
-#include <stdlib.h>
+
+#include "getline.h"
 
 int count_digits(void) // count digits, white space, others
 {
@@ -108,25 +109,20 @@ int unescape(char *s, const char *t)
   return n;
 }
 
+#define MAXLINE 1000
+
 int main(void)
 {
-  size_t n = 0;
-  char *line = NULL;
-  ssize_t len;
-  char *escaped = NULL;
-  char *unescaped = NULL;
-
-  while ((len = getline(&line, &n, stdin)) != -1)
+  char line[MAXLINE];
+  char escaped[MAXLINE * 2];
+  char unescaped[MAXLINE];
+  size_t len;
+  while ((len = my_getline(line, MAXLINE)) > 0)
   {
-    escaped = realloc(escaped, len * 2 + 1);
-    unescaped = realloc(unescaped, len * 2 + 1);
     escape(escaped, line);
     unescape(unescaped, escaped);
     printf("line = %s", line);
     printf("escaped = %s\n", escaped);
     printf("unescaped = %s", unescaped);
   }
-  free(line);
-  free(escaped);
-  free(unescaped);
 }

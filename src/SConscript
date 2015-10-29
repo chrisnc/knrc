@@ -15,30 +15,25 @@ env = Environment(
 if 'TERM' in os.environ:
     env['ENV']['TERM'] = os.environ['TERM']
 
-programs = [
-    'array',
-    'atoi',
-    'bits',
-    'chario',
-    'control',
-    'decomment',
-    'detab',
-    'entab',
-    'expand',
-    'fold',
-    'hello',
-    'limits',
-    'lines',
-    'maxline_extern',
-    'misc',
-    'power',
-    'shellsort',
-    'simplecheck',
-    'strs',
-    'switch',
-    'temperature',
-    'wc',
-]
-
-for p in programs:
-    env.Program(p, [p + '.c'])
+env.Program('array', ['array.c'])
+env.Program('atoi', ['atoi.c'])
+env.Program('bits', ['bits.c'])
+env.Program('chario', ['chario.c'])
+env.Program('control', ['control.c'])
+env.Program('decomment', ['decomment.c'])
+env.Program('detab', ['detab.c', 'getline.c'])
+env.Program('entab', ['entab.c', 'getline.c'])
+env.Program('expand', ['expand.c', 'getline.c'])
+env.Program('fold', ['fold.c'])
+env.Program('hello', ['hello.c'])
+env.Program('limits', ['limits.c'])
+env.Program('lines', ['lines.c', 'getline.c'])
+env.Program('maxline_extern', ['maxline_extern.c'])
+env.Program('misc', ['misc.c'])
+env.Program('power', ['power.c'])
+env.Program('shellsort', ['shellsort.c'])
+env.Program('simplecheck', ['simplecheck.c'])
+env.Program('strs', ['strs.c'])
+env.Program('switch', ['switch.c', 'getline.c'])
+env.Program('temperature', ['temperature.c'])
+env.Program('wc', ['wc.c'])

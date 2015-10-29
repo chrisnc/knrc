@@ -1,22 +1,23 @@
 #include <stdio.h>
-#include <stdlib.h>
+
+#include "getline.h"
 
 // Exercise 1-21. page 34
 
 #define TABSTOP 8
+#define MAXLINE 1000
 
 int main(void)
 {
-  size_t n = 0;
-  char *line = NULL;
-  ssize_t len;
+  char line[MAXLINE];
+  size_t len;
 
-  while ((len = getline(&line, &n, stdin)) != -1)
+  while ((len = my_getline(line, MAXLINE)) > 0)
   {
-    for (int s = 0; s < len;)
+    for (size_t s = 0; s < len;)
     {
       // find the index of the last character before the next tab stop
-      int e;
+      size_t e;
       for (e = s; e < s + TABSTOP - 1; ++e)
       {
         if (line[e] == '\t')
@@ -24,8 +25,8 @@ int main(void)
           break;
         }
       }
-      int next_s = e + 1;
-      int blanks_to_replace = 0;
+      size_t next_s = e + 1;
+      size_t blanks_to_replace = 0;
       if (e >= len) // the line doesn't reach the next tab stop
       {
         e = len - 1;
@@ -50,7 +51,7 @@ int main(void)
           }
         }
       }
-      for (int i = s; i <= e; ++i)
+      for (size_t i = s; i <= e; ++i)
       {
         putchar(line[i]);
       }
@@ -65,5 +66,4 @@ int main(void)
       s = next_s;
     }
   }
-  free(line);
 }

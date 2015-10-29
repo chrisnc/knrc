@@ -1,8 +1,8 @@
 #include <stdio.h>
 
-#define MAXLINE 1000 // maximum input line length
+#include "getline.h"
 
-int my_getline(char line[], int maxline);
+#define MAXLINE 1000 // maximum input line length
 
 void copy(char to[], char from[]);
 
@@ -34,10 +34,9 @@ void get_max_line(void)
 // getline: read a line into s, return length
 // modified to return the actual length of the line, even if it was longer than
 // lim-1
-int my_getline(char s[], int lim)
+int my_getline_ex_1_16(char s[], int lim)
 {
   int c = 0, i;
-
   for (i = 0; c != '\n' && (c = getchar()) != EOF; ++i)
   {
     if (i < lim - 1)
