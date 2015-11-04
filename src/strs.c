@@ -68,3 +68,27 @@ int any(const char s[], const char t[])
   }
   return -1;
 }
+
+// Exercise 4-1. page 71
+// strrindex returns the position of the rightmost occurrence of t in s, or -1
+// if there is none. This implementation is a trivial modification of strindex
+// to just continue searching even after finding a match on the left, and keeps
+// track of the rightmost one found. This could be improved by starting from
+// the end of the string and returning the first match.
+int strrindex(const char *s, const char *t)
+{
+  int i_max = -1;
+
+  for (int i = 0; s[i] != '\0'; ++i)
+  {
+    int j, k;
+    for (j = i, k = 0; t[k] != '\0' && s[j] == t[k]; ++j, ++k)
+    {
+    }
+    if (k > 0 && t[k] == '\0')
+    {
+      i_max = i;
+    }
+  }
+  return i_max;
+}
