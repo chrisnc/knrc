@@ -4,79 +4,16 @@
 #include <stdlib.h>
 #include <string.h>
 
+#include "vector.h"
+
 // Exercise 1-24. page 34
 
 struct char_info
 {
-  char c;
   int line;
   int col;
+  int c;
 };
-
-struct vector
-{
-  size_t n_elems;
-  size_t n_allocated;
-  size_t elem_size;
-  uint8_t *elems;
-};
-
-void *back(struct vector *s)
-{
-  if (s->n_elems == 0)
-  {
-    fprintf(stderr, "back on an empty vector\n");
-    exit(1);
-  }
-  return s->elems + ((s->n_elems - 1) * s->elem_size);
-}
-
-void *get(struct vector *s, size_t i)
-{
-  if (i >= s->n_elems)
-  {
-    fprintf(stderr, "get for index %zu out of range, size: %zu\n", i,
-            s->n_elems);
-    exit(1);
-  }
-  return s->elems + (i * s->elem_size);
-}
-
-void pop_back(struct vector *s)
-{
-  if (s->n_elems == 0)
-  {
-    fprintf(stderr, "pop_back on an empty vector\n");
-    exit(1);
-  }
-  --s->n_elems;
-}
-
-void push_back(struct vector *s, void *e)
-{
-  if (s->n_elems == s->n_allocated)
-  {
-    s->n_allocated <<= 1;
-    s->elems = realloc(s->elems, s->elem_size * s->n_allocated);
-  }
-  memcpy(s->elems + ((s->n_elems++) * s->elem_size), e, s->elem_size);
-}
-
-struct vector *new_vector(size_t initial_alloc, size_t elem_size)
-{
-  struct vector *s = malloc(sizeof(*s));
-  s->n_elems = 0;
-  s->n_allocated = initial_alloc;
-  s->elem_size = elem_size;
-  s->elems = malloc(s->n_allocated * s->elem_size);
-  return s;
-}
-
-void destroy_vector(struct vector *s)
-{
-  free(s->elems);
-  free(s);
-}
 
 #define NORMAL 0
 #define OPENING_SLASH 1
@@ -88,13 +25,13 @@ void destroy_vector(struct vector *s)
 #define IN_CHAR_LIT 7
 #define CHAR_LIT_ESCAPE 8
 
-bool bracket_match(char x, char y)
+static bool bracket_match(int x, int y)
 {
   return (x == '{' && y == '}') || (x == '(' && y == ')') ||
          (x == '[' && y == ']');
 }
 
-int normal(int c, struct vector *s, int line, int col)
+static int normal(int c, struct vector *s, int line, int col)
 {
   switch (c)
   {
@@ -109,20 +46,20 @@ int normal(int c, struct vector *s, int line, int col)
   case '(':
   {
     struct char_info ci;
-    ci.c = (char) c;
+    ci.c = c;
     ci.line = line;
     ci.col = col;
-    push_back(s, &ci);
+    vector_push_back(s, &ci);
     break;
   }
   case '}':
   case ']':
   case ')':
-    if (s->n_elems > 0)
+    if (vector_size(s) > 0)
     {
-      struct char_info *ci = back(s);
-      pop_back(s);
-      if (!bracket_match(ci->c, (char) c))
+      struct char_info *ci = vector_back(s);
+      vector_pop_back(s);
+      if (!bracket_match(ci->c, c))
       {
         printf("line %d, col %d: '%c' is not closed, unexpected '%c' on "
                "line %d, col %d\n",
@@ -139,7 +76,7 @@ int normal(int c, struct vector *s, int line, int col)
   return NORMAL;
 }
 
-int opening_slash(int c)
+static int opening_slash(int c)
 {
   switch (c)
   {
@@ -152,12 +89,12 @@ int opening_slash(int c)
   }
 }
 
-int c_comment(int c)
+static int c_comment(int c)
 {
   return c == '*' ? CLOSING_STAR : C_COMMENT;
 }
 
-int closing_star(int c)
+static int closing_star(int c)
 {
   switch (c)
   {
@@ -170,12 +107,12 @@ int closing_star(int c)
   }
 }
 
-int line_comment(int c)
+static int line_comment(int c)
 {
   return c == '\n' ? NORMAL : LINE_COMMENT;
 }
 
-int in_string(int c)
+static int in_string(int c)
 {
   switch (c)
   {
@@ -188,7 +125,7 @@ int in_string(int c)
   }
 }
 
-int in_char_lit(int c)
+static int in_char_lit(int c)
 {
   switch (c)
   {
@@ -207,7 +144,7 @@ int main(void)
   int state = NORMAL;
   int line = 1;
   int col = 0;
-  struct vector *s = new_vector(128, sizeof(struct char_info));
+  struct vector *s = vector_new(sizeof(struct char_info));
   while ((c = getchar()) != EOF)
   {
     ++col;
@@ -250,5 +187,5 @@ int main(void)
       col = 0;
     }
   }
-  destroy_vector(s);
+  vector_free(s);
 }

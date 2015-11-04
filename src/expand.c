@@ -8,7 +8,7 @@
 // longest range is a-z which expands 3 characters into 26
 #define EXPAND_FACTOR 9
 
-void expand(char *d, const char *s)
+static void expand(char *d, const char *s)
 {
   char begin;
   while ((begin = *d++ = *s++) != '\0')

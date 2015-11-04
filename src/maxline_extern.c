@@ -2,9 +2,9 @@
 
 #define MAXLINE 1000 // maximum input line size
 
-size_t max; // maximum length seen so far
-char line[MAXLINE]; // current input line
-char longest[MAXLINE]; // longest line saved here
+static size_t max; // maximum length seen so far
+static char line[MAXLINE]; // current input line
+static char longest[MAXLINE]; // longest line saved here
 
 size_t getline_extern(void);
 void copy_extern(void);

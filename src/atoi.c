@@ -1,6 +1,8 @@
 #include <stdio.h>
 #include <ctype.h>
 
+#include "atoi.h"
+
 // atoi: convert s to integer
 int my_atoi(const char s[])
 {

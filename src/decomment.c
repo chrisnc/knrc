@@ -12,7 +12,7 @@
 #define STRING_ESCAPE 7
 #define CHAR_LIT_ESCAPE 8
 
-int no_comment(int c)
+static int no_comment(int c)
 {
   if (c == '/')
   {
@@ -30,7 +30,7 @@ int no_comment(int c)
   return NO_COMMENT;
 }
 
-int opening_slash(int c)
+static int opening_slash(int c)
 {
   if (c == '*')
   {
@@ -45,7 +45,7 @@ int opening_slash(int c)
   return NO_COMMENT;
 }
 
-int c_comment(int c)
+static int c_comment(int c)
 {
   if (c == '*')
   {
@@ -54,7 +54,7 @@ int c_comment(int c)
   return C_COMMENT;
 }
 
-int closing_star(int c)
+static int closing_star(int c)
 {
   if (c == '/')
   {
@@ -67,7 +67,7 @@ int closing_star(int c)
   return C_COMMENT;
 }
 
-int line_comment(int c)
+static int line_comment(int c)
 {
   if (c == '\n')
   {
@@ -77,7 +77,7 @@ int line_comment(int c)
   return LINE_COMMENT;
 }
 
-int in_string(int c)
+static int in_string(int c)
 {
   putchar(c);
   if (c == '"')
@@ -91,7 +91,7 @@ int in_string(int c)
   return IN_STRING;
 }
 
-int in_char_lit(int c)
+static int in_char_lit(int c)
 {
   putchar(c);
   if (c == '\'')
@@ -105,13 +105,13 @@ int in_char_lit(int c)
   return IN_CHAR_LIT;
 }
 
-int string_escape(int c)
+static int string_escape(int c)
 {
   putchar(c);
   return IN_STRING;
 }
 
-int char_lit_escape(int c)
+static int char_lit_escape(int c)
 {
   putchar(c);
   return IN_CHAR_LIT;

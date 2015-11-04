@@ -2,50 +2,8 @@
 
 #include "getline.h"
 
-int count_digits(void) // count digits, white space, others
-{
-  int ndigit[10] = {0};
-  int nwhite = 0;
-  int nother = 0;
-
-  int c;
-  while ((c = getchar()) != EOF)
-  {
-    switch (c)
-    {
-    case '0':
-    case '1':
-    case '2':
-    case '3':
-    case '4':
-    case '5':
-    case '6':
-    case '7':
-    case '8':
-    case '9':
-      ++ndigit[c - '0'];
-      break;
-    case ' ':
-    case '\n':
-    case '\t':
-      ++nwhite;
-      break;
-    default:
-      ++nother;
-      break;
-    }
-  }
-  printf("digits =");
-  for (int i = 0; i < 10; ++i)
-  {
-    printf(" %d", ndigit[i]);
-  }
-  printf(", white space = %d, other = %d\n", nwhite, nother);
-  return 0;
-}
-
 // Exercise 3-2. page 60
-int escape(char *s, const char *t)
+static int escape(char *s, const char *t)
 {
   int n = 0;
   while (*t)
@@ -77,7 +35,7 @@ int escape(char *s, const char *t)
   return n;
 }
 
-int unescape(char *s, const char *t)
+static int unescape(char *s, const char *t)
 {
   int n = 0;
   while (*t)

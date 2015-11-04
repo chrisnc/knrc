@@ -3,7 +3,7 @@
 #define IN 1  // inside a word
 #define OUT 0 // outside a word
 
-void wc(void)
+int main(void)
 {
   int state = OUT;
   int nl = 0, nw = 0, nc = 0;
@@ -33,32 +33,3 @@ void wc(void)
  * Feeding the wc program random inputs, or generating random inputs with
  * a sufficient mix of ' ', '\n', and '\t' characters.
  */
-
-// Exercise 1-12. page 21
-void one_word_per_line(void)
-{
-  int state = OUT;
-  int c;
-  while ((c = getchar()) != EOF)
-  {
-    if (c == ' ' || c == '\n' || c == '\t')
-    {
-      if (state == IN)
-      {
-        putchar('\n');
-      }
-      state = OUT;
-    }
-    else
-    {
-      state = IN;
-      putchar(c);
-    }
-  }
-}
-
-int main(void)
-{
-  wc();
-  // one_word_per_line();
-}

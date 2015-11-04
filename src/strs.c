@@ -1,5 +1,7 @@
 #include <stdio.h>
 
+#include "strs.h"
+
 // squeeze: delete all c from s
 void squeeze(char s[], int c)
 {
@@ -65,22 +67,4 @@ int any(const char s[], const char t[])
     }
   }
   return -1;
-}
-
-int main(void)
-{
-  char s[] = "hello, world";
-  char c = 'o';
-  char e[] = "ld";
-
-  printf("squeeze(\"%s\", \'%c\') = \"", s, c);
-  squeeze(s, c);
-  printf("%s\"\n", s);
-
-  printf("squeeze_str(\"%s\", \"%s\") = \"", s, e);
-  squeeze_str(s, e);
-  printf("%s\"\n", s);
-
-  char t[] = "re";
-  printf("any(\"%s\", \"%s\") = %d\n", s, t, any(s, t));
 }

@@ -1,5 +1,7 @@
 #include <stdio.h>
 
+#include "misc.h"
+
 // Exercise 2-2. page 42
 void simple_loop(char s[], size_t lim)
 {
@@ -19,7 +21,7 @@ void simple_loop(char s[], size_t lim)
   }
 }
 
-unsigned long int next = 1;
+static unsigned long int next = 1;
 
 // rand: return pseudo-random integer on 0..32767
 int my_rand(void)

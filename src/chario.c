@@ -1,5 +1,7 @@
 #include <stdio.h>
 
+#include "chario.h"
+
 // copy input to output; 1st version
 void copy_in_to_out_first_version(void)
 {
@@ -130,4 +132,45 @@ void copy_escape(void)
 int main(void)
 {
   copy_escape();
+}
+
+void count_digits(void) // count digits, white space, others
+{
+  int ndigit[10] = {0};
+  int nwhite = 0;
+  int nother = 0;
+
+  int c;
+  while ((c = getchar()) != EOF)
+  {
+    switch (c)
+    {
+    case '0':
+    case '1':
+    case '2':
+    case '3':
+    case '4':
+    case '5':
+    case '6':
+    case '7':
+    case '8':
+    case '9':
+      ++ndigit[c - '0'];
+      break;
+    case ' ':
+    case '\n':
+    case '\t':
+      ++nwhite;
+      break;
+    default:
+      ++nother;
+      break;
+    }
+  }
+  printf("digits =");
+  for (int i = 0; i < 10; ++i)
+  {
+    printf(" %d", ndigit[i]);
+  }
+  printf(", white space = %d, other = %d\n", nwhite, nother);
 }

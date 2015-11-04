@@ -1,7 +1,7 @@
 #include <stdio.h>
 
 // shellsort: sort v[0]...v[n-1] into increasing order
-void shellsort(int v[], int n)
+static void shellsort(int v[], int n)
 {
   int gap, i, j, temp;
   for (gap = n / 2; gap > 0; gap /= 2)

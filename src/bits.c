@@ -1,18 +1,20 @@
 #include <stdio.h>
 #include <limits.h>
 
+#include "bits.h"
+
 // getbits: get n bits from position p through p + n - 1
 // (modified from book, which starts at p and counts down...
 unsigned getbits(unsigned x, int p, int n)
 {
-  return (x >> p) & ~(~0 << n);
+  return (x >> p) & ~(~0U << n);
 }
 
 // Exercise 2-6. page 49
 // set the n bits in x starting at position p with the first n bits of y
 unsigned setbits(unsigned x, int p, int n, unsigned y)
 {
-  unsigned mask = ((~0 >> p) << p) & ~(~0 << (n + p));
+  unsigned mask = ((~0U >> p) << p) & ~(~0U << (n + p));
   return (x & ~mask) | ((y << p) & mask);
 }
 
@@ -20,7 +22,7 @@ unsigned setbits(unsigned x, int p, int n, unsigned y)
 // invert the n bits in x starting at position p
 unsigned invert(unsigned x, int p, int n)
 {
-  return x ^ (((~0 >> p) << p) & ~(~0 << (n + p)));
+  return x ^ (((~0U >> p) << p) & ~(~0U << (n + p)));
 }
 
 // Exercise 2-8. page 49
