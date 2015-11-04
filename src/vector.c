@@ -55,14 +55,14 @@ void vector_push_back(struct vector *s, void *e)
 
 struct vector *vector_new(size_t elem_size)
 {
-  return vector_new_with_initial(elem_size, 0);
+  return vector_new_alloc(elem_size, 0);
 }
 
-struct vector *vector_new_with_initial(size_t elem_size, size_t initial_allocated_elems)
+struct vector *vector_new_alloc(size_t elem_size, size_t initial_alloc)
 {
   struct vector *s = malloc(sizeof(*s));
   s->n_elems = 0;
-  s->n_allocated = initial_allocated_elems;
+  s->n_allocated = initial_alloc;
   s->elem_size = elem_size;
   s->elems = malloc(s->n_allocated * s->elem_size);
   return s;

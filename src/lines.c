@@ -43,7 +43,7 @@ int my_getline_ex_1_16(char s[], int lim)
   {
     if (i < lim - 1)
     {
-      s[i] = (char) c;
+      s[i] = (char)c;
     }
   }
   if (i < lim)

@@ -34,4 +34,3 @@ int main(void)
   }
   printf(", white space = %d, other = %d\n", nwhite, nother);
 }
-

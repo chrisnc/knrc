@@ -17,7 +17,7 @@ void simple_loop(char s[], size_t lim)
     {
       break;
     }
-    s[i] = (char) c;
+    s[i] = (char)c;
   }
 }
 

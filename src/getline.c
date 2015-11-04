@@ -8,7 +8,7 @@ size_t my_getline(char *s, size_t lim)
   size_t i = 0;
   while (i < lim - 1 && c != '\n' && (c = getchar()) != EOF)
   {
-    s[i++] = (char) c;
+    s[i++] = (char)c;
   }
   if (lim > 0)
   {

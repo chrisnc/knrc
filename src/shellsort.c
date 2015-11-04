@@ -22,7 +22,7 @@ static void shellsort(int v[], int n)
 
 int main(void)
 {
-  int x[ARRAY_SIZE] = {5,2,9,12,3,12,30,-1,-900,2149};
+  int x[ARRAY_SIZE] = {5, 2, 9, 12, 3, 12, 30, -1, -900, 2149};
   shellsort(x, ARRAY_SIZE);
   for (int i = 0; i < ARRAY_SIZE; ++i)
   {

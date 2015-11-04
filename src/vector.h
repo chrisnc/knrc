@@ -15,7 +15,7 @@ void vector_push_back(struct vector *s, void *e);
 
 struct vector *vector_new(size_t elem_size);
 
-struct vector *vector_new_with_initial(size_t elem_size, size_t initial_allocated_elems);
+struct vector *vector_new_alloc(size_t elem_size, size_t initial_alloc);
 
 void vector_free(struct vector *s);
 

@@ -1,5 +1,6 @@
 #include <stdio.h>
 
+int power_first(int base, int n);
 int power(int base, int n);
 
 // test power function
@@ -13,8 +14,7 @@ int main(void)
 }
 
 // power: raise base to n-th power; n >= 0
-/*
-int power(int base, int n)
+int power_first(int base, int n)
 {
   int p = 1;
   for (int i = 1; i <= n; ++i)
@@ -23,7 +23,6 @@ int power(int base, int n)
   }
   return p;
 }
-*/
 
 // power: raise base to n-th power; n >= 0; version 2
 int power(int base, int n)

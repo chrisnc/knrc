@@ -76,8 +76,7 @@ void my_itoa(int n, char s[])
   do
   {
     s[i++] = n % 10 + '0';
-  }
-  while ((n /= 10) > 0);
+  } while ((n /= 10) > 0);
   if (sign < 0)
   {
     s[i++] = '-';
@@ -99,9 +98,8 @@ void fixed_itoa(int n, char *s)
   int i = 0;
   do
   {
-    s[i++] = (char) ('0' + abs(n % 10));
-  }
-  while ((n /= 10));
+    s[i++] = (char)('0' + abs(n % 10));
+  } while ((n /= 10));
 
   if (is_negative)
   {
@@ -119,9 +117,8 @@ void itob(int n, char *s, int b)
   do
   {
     int digit = abs(n % b);
-    s[i++] = (char) ((digit < 10) ? digit + '0' : (digit - 10) + 'a');
-  }
-  while ((n /= b));
+    s[i++] = (char)((digit < 10) ? digit + '0' : (digit - 10) + 'a');
+  } while ((n /= b));
   if (is_negative)
   {
     s[i++] = '-';
@@ -137,9 +134,8 @@ void itoa_padded(int n, char *s, int min_width)
   int i = 0;
   do
   {
-    s[i++] = (char) ('0' + abs(n % 10));
-  }
-  while ((n /= 10));
+    s[i++] = (char)('0' + abs(n % 10));
+  } while ((n /= 10));
 
   if (is_negative)
   {
@@ -155,16 +151,16 @@ void itoa_padded(int n, char *s, int min_width)
 
 int main(void)
 {
-  static const int n = 10000;
+  static const int n = 10;
   int *v = malloc(n * sizeof(*v));
   for (int i = 0; i < n; ++i)
   {
     v[i] = i;
   }
 
-  for (int x = -10; x <= n + 10; ++x)
+  for (int x = -3; x <= n + 3; ++x)
   {
-    (void) binsearch(x, v, n);
+    printf("binsearch(%d, v, %d) = %d\n", x, n, binsearch(x, v, n));
   }
   free(v);
 

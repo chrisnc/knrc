@@ -30,7 +30,7 @@ unsigned invert(unsigned x, int p, int n)
 unsigned rightrot(unsigned x, int n)
 {
   static const int s = sizeof(unsigned) * CHAR_BIT;
-  n %= s; // required to avoid overly large shifts
+  n %= s;     // required to avoid overly large shifts
   if (n == 0) // a shift of (s - 0) is undefined
   {
     return x;
@@ -64,9 +64,9 @@ int bitcount(unsigned x)
  *       x - 1  = 11100101110
  *  x & (x - 1) = 11100101110
  *
- * If the rightmost 1 bit is in some higher position with all lower-order bits 0,
- * subtracting 1 sets all the lower-order bits to 1 due to borrowing subtraction,
- * and the higher position 1 bit is set to 0.
+ * If the rightmost 1 bit is in some higher position with all lower-order bits
+ * 0, subtracting 1 sets all the lower-order bits to 1 due to borrowing
+ * subtraction, and the higher position 1 bit is set to 0.
  * A bitwise & of this number with the original x sets all of these bits to
  * 0, since the rightmost 1 was set to zero in (x - 1), and the lower order
  * bits were all zero in x itself.
