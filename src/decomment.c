@@ -123,7 +123,6 @@ int main(void)
   int state = NO_COMMENT;
   while ((c = getchar()) != EOF)
   {
-    printf("in state %d, read %c\n", state, c);
     switch (state)
     {
     case NO_COMMENT:

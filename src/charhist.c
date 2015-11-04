@@ -18,7 +18,6 @@ int main(void)
 
   while ((c = getchar()) != EOF)
   {
-    printf("found a %c\n", c);
     ++hist[(unsigned char)c];
   }
   printf("char   frequency\n");
