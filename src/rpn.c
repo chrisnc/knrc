@@ -8,12 +8,13 @@
 int getop(char[]);
 void push(double);
 double pop(void);
+int size(void);
 
 // reverse Polish calculator
 int main(void)
 {
   int type;
-  double op2;
+  double x, y;
   char s[MAXOP];
 
   while ((type = getop(s)) != EOF)
@@ -30,18 +31,54 @@ int main(void)
       push(pop() * pop());
       break;
     case '-':
-      op2 = pop();
-      push(pop() - op2);
+      y = pop();
+      push(pop() - y);
       break;
     case '/':
-      op2 = pop();
-      if (op2 != 0.0)
+      y = pop();
+      if (y != 0.0)
       {
-        push(pop() / op2);
+        push(pop() / y);
       }
       else
       {
         printf("error: zero divisor\n");
+      }
+      break;
+    // Exercise 4-3. (part 1) page 79
+    case '%':
+      y = pop();
+      if (y != 0.0)
+      {
+        x = pop();
+        push((int)x % (int)y);
+      }
+      else
+      {
+        printf("error: zero divisor for modulus\n");
+      }
+      break;
+    // Exercise 4-4. page 79
+    case 'p': // print the top element
+      x = pop();
+      printf("%f\n", x);
+      push(x);
+      break;
+    case 'd': // duplicate the top element
+      x = pop();
+      push(x);
+      push(x);
+      break;
+    case 's': // swap the top two elements
+      y = pop();
+      x = pop();
+      push(y);
+      push(x);
+      break;
+    case 'c': // clear the stack
+      while (size() > 0)
+      {
+        pop();
       }
       break;
     case '\n':
@@ -87,22 +124,39 @@ double pop(void)
   }
 }
 
+int size(void)
+{
+  return sp;
+}
+
 int getch(void);
 void ungetch(int);
 
 // getop: get next operator or numeric operand
 int getop(char s[])
 {
-  int i, c;
+  int c;
   while ((s[0] = (char)(c = getch())) == ' ' || c == '\t')
   {
   }
   s[1] = '\0';
-  if (!isdigit(c) && c != '.')
+  int i = 0;
+  // Exercise 4-3. (part 2) page 79
+  if (c == '-')
+  {
+    // after reading a '-', peek at the next character
+    // if it isn't a digit, return the '-' as an op
+    // otherwise continue reading the number
+    ungetch(c = getch());
+    if (!isdigit(c))
+    {
+      return '-';
+    }
+  }
+  else if (!isdigit(c) && c != '.')
   {
     return c; // not a number
   }
-  i = 0;
   if (isdigit(c)) // collect integer part
   {
     while (isdigit(s[++i] = (char)(c = getch())))
