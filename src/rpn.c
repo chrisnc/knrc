@@ -1,5 +1,6 @@
 #include <ctype.h>
 #include <math.h>
+#include <stdbool.h>
 #include <stdio.h>
 #include <stdlib.h> // for atof
 #include <string.h>
@@ -190,6 +191,9 @@ int getch(void);
 void ungetch(int);
 void ungets(const char *);
 
+int getch_one(void);
+void ungetch_one(int);
+
 // getop: get next operator or numeric operand
 int getop(char s[])
 {
@@ -295,4 +299,31 @@ void ungets(const char *s)
   {
     buf[bufp++] = s[--i];
   }
+}
+
+// Exercise 4-8. page 79
+// one character only versions of getch and ungetch
+
+static bool has_char = false;
+static int ungotten = '\0';
+
+int getch_one(void)
+{
+  if (has_char)
+  {
+    has_char = false;
+    return ungotten;
+  }
+  return getchar();
+}
+
+void ungetch_one(int c)
+{
+  if (has_char)
+  {
+    printf("ungetch: too many characters\n");
+    return;
+  }
+  has_char = true;
+  ungotten = c;
 }
