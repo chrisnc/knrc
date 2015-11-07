@@ -188,6 +188,7 @@ int size(void)
 
 int getch(void);
 void ungetch(int);
+void ungets(const char *);
 
 // getop: get next operator or numeric operand
 int getop(char s[])
@@ -248,7 +249,7 @@ int getop(char s[])
 #define BUFSIZE 100
 
 static char buf[BUFSIZE];
-static int bufp = 0;
+static size_t bufp = 0;
 
 // get a (possibly pushed back) character
 int getch(void)
@@ -262,9 +263,36 @@ void ungetch(int c)
   if (bufp >= BUFSIZE)
   {
     printf("ungetch: too many characters\n");
+    return;
   }
-  else
+  buf[bufp++] = (char)c;
+}
+
+// Exercise 4-7. page 79
+// push a string back on the input
+// ungets should know about buf and bufp so it can determine whether it's
+// possible to unget the entire string or not.
+// If it just uses ungetch, it can partially fail,
+// and the caller won't be able to determine how much of the
+// string was ungetch'ed, unless we add a return value to both ungetch
+// and ungets.
+void ungets(const char *s)
+{
+  size_t n = strlen(s);
+  if (n == 0)
   {
-    buf[bufp++] = (char)c;
+    return;
+  }
+  if (bufp + n - 1 >= BUFSIZE)
+  {
+    printf("ungets: too many characters\n");
+    return;
+  }
+  // We have to put the string into the buffer backward.
+  // The first character of the string should be at the top of the buffer
+  // so it is returned first by getch.
+  for (size_t i = n; i > 0;)
+  {
+    buf[bufp++] = s[--i];
   }
 }
