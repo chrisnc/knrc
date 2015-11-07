@@ -1,9 +1,12 @@
+#include <ctype.h>
+#include <math.h>
 #include <stdio.h>
 #include <stdlib.h> // for atof
-#include <ctype.h>
+#include <string.h>
 
-#define MAXOP 100  // max size of operand or operator
-#define NUMBER '0' // signal that a number was found
+#define MAXOP 100    // max size of operand or operator
+#define NUMBER '0'   // signal that a number was found
+#define ALPHA_OP 'a' // signal that an alphabetic operator was found
 
 int getop(char[]);
 void push(double);
@@ -58,32 +61,59 @@ int main(void)
         printf("error: zero divisor for modulus\n");
       }
       break;
-    // Exercise 4-4. page 79
-    case 'p': // print the top element
-      x = pop();
-      printf("%f\n", x);
-      push(x);
-      break;
-    case 'd': // duplicate the top element
-      x = pop();
-      push(x);
-      push(x);
-      break;
-    case 's': // swap the top two elements
-      y = pop();
-      x = pop();
-      push(y);
-      push(x);
-      break;
-    case 'c': // clear the stack
-      while (size() > 0)
-      {
-        pop();
-      }
-      break;
     case '\n':
       printf("\t%.8g\n", pop());
       break;
+    case ALPHA_OP:
+      // Exercise 4-4. page 79
+      if (strcmp(s, "show") == 0) // print the top element
+      {
+        x = pop();
+        printf("\t%.8g\n", x);
+        push(x);
+        break;
+      }
+      if (strcmp(s, "dup") == 0) // duplicate the top element
+      {
+        x = pop();
+        push(x);
+        push(x);
+        break;
+      }
+      if (strcmp(s, "swap") == 0) // swap the top two elements
+      {
+        y = pop();
+        x = pop();
+        push(y);
+        push(x);
+        break;
+      }
+      if (strcmp(s, "clr") == 0) // clear the stack
+      {
+        while (size() > 0)
+        {
+          pop();
+        }
+        break;
+      }
+      // Exercise 4-5. page 79
+      if (strcmp(s, "sin") == 0)
+      {
+        push(sin(pop()));
+        break;
+      }
+      if (strcmp(s, "exp") == 0)
+      {
+        push(exp(pop()));
+        break;
+      }
+      if (strcmp(s, "pow") == 0)
+      {
+        y = pop();
+        push(pow(pop(), y));
+        break;
+      }
+      // fallthrough if none of the strcmp's find a match
     default:
       printf("error: unknown command %s\n", s);
       break;
@@ -153,9 +183,19 @@ int getop(char s[])
       return '-';
     }
   }
+  else if (isalpha(c))
+  {
+    // read the other alpha characters
+    while (isalpha(s[++i] = (char)(c = getch())))
+    {
+    }
+    s[i] = '\0';
+    ungetch(c);
+    return ALPHA_OP;
+  }
   else if (!isdigit(c) && c != '.')
   {
-    return c; // not a number
+    return c; // single character operator
   }
   if (isdigit(c)) // collect integer part
   {
