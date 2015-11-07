@@ -20,6 +20,13 @@ int main(void)
   double x, y;
   char s[MAXOP];
 
+  double ans = NAN;
+  double vars[26];
+  for (size_t i = 0; i < 26; ++i)
+  {
+    vars[i] = NAN;
+  }
+
   while ((type = getop(s)) != EOF)
   {
     switch (type)
@@ -62,9 +69,29 @@ int main(void)
       }
       break;
     case '\n':
-      printf("\t%.8g\n", pop());
+      ans = pop();
+      printf("\t%.8g\n", ans);
       break;
     case ALPHA_OP:
+      // Exercise 4-6. page 79
+      // assignment to a variable, e.g., "=a"
+      if (s[0] == '=' && isalpha(s[1]) && s[2] == '\0')
+      {
+        vars[tolower(s[1]) - 'a'] = pop();
+        break;
+      }
+      // get the value of a variable
+      if (isalpha(s[0]) && s[1] == '\0')
+      {
+        push(vars[tolower(s[0]) - 'a']);
+        break;
+      }
+      // "ans" is a special variable for the last value shown by pressing enter
+      if (strcmp(s, "ans") == 0)
+      {
+        push(ans);
+        break;
+      }
       // Exercise 4-4. page 79
       if (strcmp(s, "show") == 0) // print the top element
       {
@@ -113,7 +140,7 @@ int main(void)
         push(pow(pop(), y));
         break;
       }
-      // fallthrough if none of the strcmp's find a match
+    // fallthrough if none of the strcmp's find a match
     default:
       printf("error: unknown command %s\n", s);
       break;
@@ -183,8 +210,9 @@ int getop(char s[])
       return '-';
     }
   }
-  else if (isalpha(c))
+  else if (isalpha(c) || c == '=')
   {
+    // multi-letter operators, variables, and assignment
     // read the other alpha characters
     while (isalpha(s[++i] = (char)(c = getch())))
     {
