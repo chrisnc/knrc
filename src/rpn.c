@@ -177,7 +177,7 @@ double pop(void)
   else
   {
     printf("error: stack empty\n");
-    return 0.0;
+    return NAN;
   }
 }
 
