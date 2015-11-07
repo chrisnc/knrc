@@ -252,7 +252,10 @@ int getop(char s[])
 
 #define BUFSIZE 100
 
-static char buf[BUFSIZE];
+// Exercise 4-9. page 79
+// To handle pushed back EOF, just let buf be an array of int.
+// Treat EOF like any other character otherwise.
+static int buf[BUFSIZE];
 static size_t bufp = 0;
 
 // get a (possibly pushed back) character
@@ -269,7 +272,7 @@ void ungetch(int c)
     printf("ungetch: too many characters\n");
     return;
   }
-  buf[bufp++] = (char)c;
+  buf[bufp++] = c;
 }
 
 // Exercise 4-7. page 79
