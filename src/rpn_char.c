@@ -197,6 +197,10 @@ void ungetch_one(int);
 // getop: get next operator or numeric operand
 int getop(char s[])
 {
+  // Exercise 4-11. TODO
+  // modify getop so it uses an internal static variable instead of ungetch
+  // (I think this will make the function much uglier..., unless we start from
+  // the original version of getop.)
   int c;
   while ((s[0] = (char)(c = getch())) == ' ' || c == '\t')
   {
