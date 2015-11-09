@@ -47,7 +47,14 @@ void vector_push_back(struct vector *s, void *e)
 {
   if (s->n_elems == s->n_allocated)
   {
-    s->n_allocated <<= 1;
+    if (s->n_allocated == 0)
+    {
+      ++s->n_allocated;
+    }
+    else
+    {
+      s->n_allocated <<= 1;
+    }
     s->elems = realloc(s->elems, s->elem_size * s->n_allocated);
   }
   memcpy(s->elems + ((s->n_elems++) * s->elem_size), e, s->elem_size);
