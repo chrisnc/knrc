@@ -61,11 +61,7 @@ int main(void)
     printf("itoa_recur(%d, s) -> s = \"%s\"\n", x[i], s);
   }
 
-  char a[] = "hello, there";
-  char b[] = "this is a string";
-  char c[] = "";
-  char d[] = "0012";
-  char *const ss[] = {a, b, c, d};
+  char ss[4][20] = {"hello, there", "this is a string", "", "0012"};
 
   for (size_t i = 0; i < 4; ++i)
   {

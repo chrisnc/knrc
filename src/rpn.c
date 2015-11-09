@@ -7,6 +7,10 @@
 #include "getline.h"
 #include "vector.h"
 
+#ifdef _MSC_VER
+#define strtok_r strtok_s
+#endif
+
 // Exercise 4-10. page 79
 // Reverse Polish Notation calculator with getline
 
@@ -38,7 +42,9 @@ int main(void)
 
   while (my_getline(line, MAXLINE) > 0)
   {
-    for (const char *s = strtok(line, delims); s; s = strtok(NULL, delims))
+    char *save = NULL;
+    for (const char *s = strtok_r(line, delims, &save); s;
+         s = strtok_r(NULL, delims, &save))
     {
       runop(s, vars, ans);
     }
