@@ -9,7 +9,7 @@
 
 #ifdef _MSC_VER
 #define strtok_r strtok_s
-#endif
+#endif // _MSC_VER
 
 // Exercise 4-10. page 79
 // Reverse Polish Notation calculator with getline
