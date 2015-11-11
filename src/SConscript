@@ -25,6 +25,7 @@ if env['PLATFORM'] == 'win32':
 if 'TERM' in os.environ:
     env['ENV']['TERM'] = os.environ['TERM']
 
+env.Program('alloc', ['alloc.c'])
 env.Program('atof', ['atof.c'])
 env.Program('atoi', ['atoi.c'])
 env.Program('bits', ['bits.c'])
