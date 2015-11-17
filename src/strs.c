@@ -92,3 +92,73 @@ int strrindex(const char *s, const char *t)
   }
   return i_max;
 }
+
+// Exercise 5-3. page 107
+void strcat_ptr(char *s, const char *t)
+{
+  while (*s)
+  {
+    ++s;
+  }
+  while ((*s++ = *t++) != '\0')
+  {
+  }
+}
+
+// Exercise 5-4. page 107
+int strend(const char *s, const char *t)
+{
+  const char *tstart = t;
+  while (*s)
+  {
+    ++s;
+  }
+  while (*t)
+  {
+    ++t;
+  }
+  while (*--s == *--t && t != tstart)
+  {
+  }
+  return t == tstart;
+}
+
+// Exercise 5-5. page 107
+char *my_strncpy(char *s, const char *t, size_t n)
+{
+  char *sstart = s;
+  for (; n && *t; --n, ++s, ++t)
+  {
+    *s = *t;
+  }
+  for (; n; --n, ++s)
+  {
+    *s = '\0';
+  }
+  return sstart;
+}
+
+char *my_strncat(char *s, const char *t, size_t n)
+{
+  char *sstart = s;
+  while (*s)
+  {
+    ++s;
+  }
+  for (; n && (*s++ = *t++) != '\0'; --n)
+  {
+  }
+  if (n == 0)
+  {
+    *s = '\0';
+  }
+  return sstart;
+}
+
+int my_strncmp(const char *s, const char *t, size_t n)
+{
+  for (; n && *s && (*s == *t); --n, ++s, ++t)
+  {
+  }
+  return n ? *s - *t : 0;
+}
