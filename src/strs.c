@@ -75,19 +75,22 @@ int any(const char s[], const char t[])
 // to just continue searching even after finding a match on the left, and keeps
 // track of the rightmost one found. This could be improved by starting from
 // the end of the string and returning the first match.
+// Exercise 5-6. page 107
+// modified to use pointer arithmetic
 int strrindex(const char *s, const char *t)
 {
   int i_max = -1;
+  const char *sstart = s;
 
-  for (int i = 0; s[i] != '\0'; ++i)
+  for (; *s; ++s)
   {
-    int j, k;
-    for (j = i, k = 0; t[k] != '\0' && s[j] == t[k]; ++j, ++k)
+    const char *j, *k;
+    for (j = s, k = t; *k && *j == *k; ++j, ++k)
     {
     }
-    if (k > 0 && t[k] == '\0')
+    if (k > t && *k == '\0')
     {
-      i_max = i;
+      i_max = (int)(s - sstart);
     }
   }
   return i_max;

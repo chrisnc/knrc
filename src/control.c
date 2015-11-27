@@ -52,37 +52,41 @@ int binsearch_2(int x, int v[], int n)
   return (x == v[mid]) ? mid : -1;
 }
 
+// Exercise 5-6, page 107
+// modified these functions to use pointer arithmetic
+
 // reverse: reverse string s in place
-void reverse(char s[])
+void reverse(char *s)
 {
   size_t n = strlen(s);
-  for (size_t i = 0, j = n - 1; i < n / 2; ++i, --j)
+  char *t = s + n;
+  while (s < t)
   {
-    char c = s[i];
-    s[i] = s[j];
-    s[j] = c;
+    char c = *s;
+    *s++ = *--t;
+    *t = c;
   }
 }
 
 // itoa from page 64
-void my_itoa(int n, char s[])
+void my_itoa(int n, char *s)
 {
+  char *start = s;
   int sign;
   if ((sign = n) < 0) // record sign
   {
     n = -n;
   }
-  int i = 0;
   do
   {
-    s[i++] = n % 10 + '0';
+    *s++ = n % 10 + '0';
   } while ((n /= 10) > 0);
   if (sign < 0)
   {
-    s[i++] = '-';
+    *s++ = '-';
   }
-  s[i] = '\0';
-  reverse(s);
+  *s = '\0';
+  reverse(start);
 }
 
 /*
@@ -94,59 +98,60 @@ void my_itoa(int n, char s[])
  */
 void fixed_itoa(int n, char *s)
 {
+  char *start = s;
   bool is_negative = n < 0;
-  int i = 0;
   do
   {
-    s[i++] = (char)('0' + abs(n % 10));
+    *s++ = (char)('0' + abs(n % 10));
   } while ((n /= 10));
 
   if (is_negative)
   {
-    s[i++] = '-';
+    *s++ = '-';
   }
-  s[i] = '\0';
-  reverse(s);
+  *s = '\0';
+  reverse(start);
 }
 
 // Exercise 3-5. page 64
 void itob(int n, char *s, int b)
 {
+  char *start = s;
   bool is_negative = n < 0;
-  int i = 0;
   do
   {
     int digit = abs(n % b);
-    s[i++] = (char)((digit < 10) ? digit + '0' : (digit - 10) + 'a');
+    *s++ = (char)((digit < 10) ? digit + '0' : (digit - 10) + 'a');
   } while ((n /= b));
   if (is_negative)
   {
-    s[i++] = '-';
+    *s++ = '-';
   }
-  s[i] = '\0';
-  reverse(s);
+  *s = '\0';
+  reverse(start);
 }
 
 // Exercise 3-6. page 64
 void itoa_padded(int n, char *s, int min_width)
 {
+  char *start = s;
+  const char *end = s + min_width;
   bool is_negative = n < 0;
-  int i = 0;
   do
   {
-    s[i++] = (char)('0' + abs(n % 10));
+    *s++ = (char)('0' + abs(n % 10));
   } while ((n /= 10));
 
   if (is_negative)
   {
-    s[i++] = '-';
+    *s++ = '-';
   }
-  while (i < min_width)
+  while (s < end)
   {
-    s[i++] = ' ';
+    *s++ = ' ';
   }
-  s[i] = '\0';
-  reverse(s);
+  *s = '\0';
+  reverse(start);
 }
 
 int main(void)
@@ -164,14 +169,29 @@ int main(void)
   }
   free(v);
 
-  char s[] = "This is a string.";
-  printf("%s\n", s);
-  reverse(s);
-  printf("%s\n", s);
+  char odd[] = "This is an odd length string.";
+  printf("strlen(\"%s\") = %zu\n", odd, strlen(odd));
+  printf("%s\n", odd);
+  reverse(odd);
+  printf("%s\n", odd);
+
+  char even[] = "This is an even length string.";
+  printf("strlen(\"%s\") = %zu\n", even, strlen(even));
+  printf("%s\n", even);
+  reverse(even);
+  printf("%s\n", even);
+
+  char empty[] = "";
+  printf("strlen(\"%s\") = %zu\n", empty, strlen(empty));
+  printf("%s\n", empty);
+  reverse(empty);
+  printf("%s\n", empty);
 
   char str[100];
   my_itoa(-9000, str);
-  printf("%s\n", str);
+  printf("my_itoa(%d) = \"%s\"\n", -9000, str);
+  my_itoa(INT_MIN, str);
+  printf("my_itoa(%d) = \"%s\"\n", INT_MIN, str);
   fixed_itoa(INT_MIN, str);
   printf("fixed_itoa(%d) = \"%s\"\n", INT_MIN, str);
 
@@ -180,9 +200,10 @@ int main(void)
   printf("itob(%d) = \"%s\"\n", x, str);
 
   int z = -10;
-  itoa_padded(z, s, 10);
-  printf("itoa_padded(%d, s, 10); s = %s\n", z, s);
-  printf("len(s) = %zu\n", strlen(s));
+  char itoaresult[100] = {0};
+  itoa_padded(z, itoaresult, 10);
+  printf("itoa_padded(%d, s, 10); s = %s\n", z, itoaresult);
+  printf("len(s) = %zu\n", strlen(itoaresult));
 
   return 0;
 }

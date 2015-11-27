@@ -9,7 +9,7 @@
 #define NUMBER '0'   // signal that a number was found
 #define ALPHA_OP 'a' // signal that an alphabetic operator was found
 
-int getop(char[]);
+int getop(char *);
 void push(double);
 double pop(void);
 int size(void);
@@ -195,18 +195,20 @@ int getch_one(void);
 void ungetch_one(int);
 
 // getop: get next operator or numeric operand
-int getop(char s[])
+int getop(char *s)
 {
-  // Exercise 4-11. TODO
+  // Exercise 4-11. page 83 TODO
   // modify getop so it uses an internal static variable instead of ungetch
   // (I think this will make the function much uglier..., unless we start from
   // the original version of getop.)
+
+  // Exercise 5-6. page 107
+  // modified to use pointer arithmetic
   int c;
-  while ((s[0] = (char)(c = getch())) == ' ' || c == '\t')
+  while ((*s = (char)(c = getch())) == ' ' || c == '\t')
   {
   }
   s[1] = '\0';
-  int i = 0;
   // Exercise 4-3. (part 2) page 79
   if (c == '-')
   {
@@ -223,10 +225,10 @@ int getop(char s[])
   {
     // multi-letter operators, variables, and assignment
     // read the other alpha characters
-    while (isalpha(s[++i] = (char)(c = getch())))
+    while (isalpha(*++s = (char)(c = getch())))
     {
     }
-    s[i] = '\0';
+    *s = '\0';
     ungetch(c);
     return ALPHA_OP;
   }
@@ -236,17 +238,17 @@ int getop(char s[])
   }
   if (isdigit(c)) // collect integer part
   {
-    while (isdigit(s[++i] = (char)(c = getch())))
+    while (isdigit(*++s = (char)(c = getch())))
     {
     }
   }
   if (c == '.') // collect fraction part
   {
-    while (isdigit(s[++i] = (char)(c = getch())))
+    while (isdigit(*++s = (char)(c = getch())))
     {
     }
   }
-  s[i] = '\0';
+  *s = '\0';
   if (c != EOF)
   {
     ungetch(c);

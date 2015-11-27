@@ -3,35 +3,34 @@
 
 #include "atoi.h"
 
+// Exercise 5-6, page 107
+// modified these functions to use pointer arithmetic
+
 // atoi: convert s to integer
-int my_atoi(const char s[])
+int my_atoi(const char *s)
 {
   int n = 0;
-  for (int i = 0; s[i] >= '0' && s[i] <= '9'; ++i)
+  while (*s >= '0' && *s <= '9')
   {
-    n = 10 * n + (s[i] - '0');
+    n *= 10;
+    n += *s++ - '0';
   }
   return n;
 }
 
 // Exercise 2-3. page 46
-int my_htoi(const char s[])
+int my_htoi(const char *s)
 {
-  int n = 0;
-  int i;
   if (s[0] == '0' && (s[1] == 'x' || s[1] == 'X'))
   {
-    i = 2;
+    s += 2;
   }
-  else
+  int n = 0;
+  while (isxdigit(*s))
   {
-    i = 0;
-  }
-  for (; isxdigit(s[i]); ++i)
-  {
-    int c = tolower(s[i]);
-    int next_digit = isalpha(c) ? c - 'a' + 10 : c - '0';
-    n = 0x10 * n + next_digit;
+    int c = tolower(*s++);
+    n *= 0x10;
+    n += isalpha(c) ? c - 'a' + 10 : c - '0';
   }
   return n;
 }
@@ -44,21 +43,22 @@ int my_lower(int c)
 }
 
 // new atoi from page 54
-int newatoi(char s[])
+int newatoi(const char *s)
 {
-  int i;
-  for (i = 0; isspace(s[i]); ++i) // skip whitespace
+  while (isspace(*s)) // skip whitespace
   {
+    ++s;
   }
-  int sign = (s[i] == '-') ? -1 : 1;
-  if (s[i] == '+' || s[i] == '-') // skip sign
+  int sign = (*s == '-') ? -1 : 1;
+  if (*s == '+' || *s == '-') // skip sign
   {
-    ++i;
+    ++s;
   }
-  int n;
-  for (n = 0; isdigit(s[i]); ++i)
+  int n = 0;
+  while (isdigit(*s))
   {
-    n = 10 * n + (s[i] - '0');
+    n *= 10;
+    n += (*s++ - '0');
   }
   return sign * n;
 }
@@ -66,9 +66,11 @@ int newatoi(char s[])
 int main(void)
 {
   const char *s = "100";
+  const char *sn = "-123";
   const char *sx = "0x1a";
   char c = 'F';
   printf("my_atoi(\"%s\") = %d\n", s, my_atoi(s));
+  printf("newatoi(\"%s\") = %d\n", sn, newatoi(sn));
   printf("my_lower(\'%c\') = \'%c\'\n", c, my_lower(c));
   printf("my_htoi(\"%s\") = %d\n", sx, my_htoi(sx));
 }

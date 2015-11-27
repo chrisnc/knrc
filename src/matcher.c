@@ -7,19 +7,22 @@
 
 static char pattern[] = "ould"; // pattern to search for
 
-// strindex: return index of t in s, -1 if none
-static int strindex(char s[], char t[])
-{
-  int i, j, k;
+// Exercise 5-6. page 107
+// modified strindex to use pointer arithmetic
 
-  for (i = 0; s[i] != '\0'; ++i)
+// strindex: return index of t in s, -1 if none
+static int strindex(const char *s, const char *t)
+{
+  const char *sstart = s;
+  for (; *s; ++s)
   {
-    for (j = i, k = 0; t[k] != '\0' && s[j] == t[k]; ++j, ++k)
+    const char *j, *k;
+    for (j = s, k = t; *k && *j == *k; ++j, ++k)
     {
     }
-    if (k > 0 && t[k] == '\0')
+    if (k > t && *k == '\0')
     {
-      return i;
+      return (int)(s - sstart);
     }
   }
   return -1;

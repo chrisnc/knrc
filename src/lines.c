@@ -32,38 +32,36 @@ void get_max_line(void)
   }
 }
 
+// Exercise 5-6. page 107
+// modified these functions to use pointer arithmetic
+
 // Exercise 1-16. page 30
 // getline: read a line into s, return length
 // modified to return the actual length of the line, even if it was longer than
 // lim-1
-int my_getline_ex_1_16(char s[], int lim)
+size_t my_getline_ex_1_16(char *s, size_t lim)
 {
-  int c = 0, i;
-  for (i = 0; c != '\n' && (c = getchar()) != EOF; ++i)
+  int c = 0;
+  size_t n = 0;
+  for (; c != '\n' && (c = getchar()) != EOF; ++n)
   {
-    if (i < lim - 1)
+    if (n < lim - 1)
     {
-      s[i] = (char)c;
+      *s++ = (char)c;
     }
   }
-  if (i < lim)
+  if (lim > 0)
   {
-    s[i] = '\0';
+    *s = '\0';
   }
-  else if (lim > 0)
-  {
-    s[lim - 1] = '\0';
-  }
-  return i;
+  return n;
 }
 
 // copy: copy 'from' into 'to'; assume to is big enough
-void copy(char to[], char from[])
+void copy(char *to, char *from)
 {
-  int i = 0;
-  while ((to[i] = from[i]) != '\0')
+  while ((*to++ = *from++) != '\0')
   {
-    ++i;
   }
 }
 
@@ -91,16 +89,15 @@ void delete_blanks(void)
   while ((len = my_getline(line, MAXLINE)) > 0)
   {
     int line_is_blank = 0;
-    size_t i;
     /*
      * Start from the end of the line and delete whitespace. We also delete the
      * newline here to avoid the bookkeeping of starting at len - 2. This would
      * incur a special case for the line "\n" where len - 2 overflows.
      */
-    for (i = len - 1; line[i] == ' ' || line[i] == '\t' || line[i] == '\n'; --i)
+    for (char *e = line + len - 1; *e == ' ' || *e == '\t' || *e == '\n'; --e)
     {
-      line[i] = '\0';
-      if (i == 0)
+      *e = '\0';
+      if (e == line)
       {
         line_is_blank = 1;
         break;
@@ -115,15 +112,14 @@ void delete_blanks(void)
 }
 
 // Exercise 1-19. page 31
-void reverse(char s[], size_t len)
+void reverse(char *s, size_t len)
 {
-  size_t half_len = len / 2;
-  for (size_t i = 0; i < half_len; ++i)
+  char *t = s + len;
+  while (s < t)
   {
-    size_t j = len - i - 1;
-    char tmp = s[i];
-    s[i] = s[j];
-    s[j] = tmp;
+    char tmp = *s;
+    *s++ = *--t;
+    *t = tmp;
   }
 }
 
