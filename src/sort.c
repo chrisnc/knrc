@@ -1,6 +1,5 @@
 #include <stdio.h>
 #include <string.h>
-#include <stdlib.h>
 
 #include "getline.h"
 
@@ -10,28 +9,36 @@ void writelines(char **lineptr, size_t nlines);
 void sortlines(char **v, size_t n);
 
 #define MAXLINES 5000 // max # lines to be sorted
-#define MAXLEN 1000   // max lenghth of any input line
+#define MAXLEN 1000   // max length of any input line
 
 int main(void)
 {
-  char line[MAXLEN];
-  char *lines[MAXLINES];
+  // Exercise 5-7. page 110
+  // When using a fixed buffer for the lines instead of malloc,
+  // the program takes roughly the same time to run.
+
+  // Need to use one extra line to read into to determine if there is input
+  // beyond MAXLINES.
+  char lines[MAXLINES + 1][MAXLEN];
+  char *lineptrs[MAXLINES];
   size_t nlines = 0;
   size_t len;
-  while ((len = my_getline(line, MAXLEN)) > 0)
+  while ((len = my_getline(lines[nlines], MAXLEN)) > 0)
   {
-    if (nlines >= MAXLINES || (lines[nlines] = malloc(len + 1)) == NULL)
+    if (nlines >= MAXLINES || lines[nlines][len - 1] != '\n')
     {
       fprintf(stderr, "error: input too big to sort\n");
       return 1;
     }
-    strcpy(lines[nlines++], line);
+    lineptrs[nlines] = lines[nlines];
+    ++nlines;
   }
-  sortlines(lines, nlines);
-  writelines(lines, nlines);
+
+  sortlines(lineptrs, nlines);
+
   for (size_t i = 0; i < nlines; ++i)
   {
-    free(lines[i]);
+    printf("%s", lineptrs[i]);
   }
   return 0;
 }
@@ -95,4 +102,3 @@ void sortlines(char **v, size_t n)
   sortlines(v, last);
   sortlines(v + last + 1, n - last - 1);
 }
-
