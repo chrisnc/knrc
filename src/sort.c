@@ -6,31 +6,34 @@
 
 // line sorting example from page 107-110
 
+void writelines(char **lineptr, size_t nlines);
+void sortlines(char **v, size_t n);
+
 #define MAXLINES 5000 // max # lines to be sorted
+#define MAXLEN 1000   // max lenghth of any input line
 
-#define MAXLEN 1000 // max lenghth of any input line
-
-// readlines: read input lines
-static int readlines(char **lines, size_t maxlines)
+int main(void)
 {
-  char *p, line[MAXLEN];
-
+  char line[MAXLEN];
+  char *lines[MAXLINES];
   size_t nlines = 0;
   size_t len;
   while ((len = my_getline(line, MAXLEN)) > 0)
   {
-    if (nlines >= maxlines || (p = (char *)malloc(len)) == NULL)
+    if (nlines >= MAXLINES || (lines[nlines] = malloc(len + 1)) == NULL)
     {
-      return -1;
+      fprintf(stderr, "error: input too big to sort\n");
+      return 1;
     }
-    else
-    {
-      line[len - 1] = '\0'; // delete newline
-      strcpy(p, line);
-      lines[nlines++] = p;
-    }
+    strcpy(lines[nlines++], line);
   }
-  return (int)nlines;
+  sortlines(lines, nlines);
+  writelines(lines, nlines);
+  for (size_t i = 0; i < nlines; ++i)
+  {
+    free(lines[i]);
+  }
+  return 0;
 }
 
 // writelines: write output lines
@@ -54,11 +57,11 @@ static int readlines(char **lines, size_t maxlines)
 // other than the first level of indirection, you must use explicit casts
 // (e.g. (const char **) in this case), although as always, the need for such a
 // cast may indicate a deeper problem which the cast doesn't really fix."
-static void writelines(char **lineptr, size_t nlines)
+void writelines(char **lineptr, size_t nlines)
 {
   while (nlines-- > 0)
   {
-    printf("%s\n", *lineptr++);
+    printf("%s", *lineptr++);
   }
 }
 
@@ -70,7 +73,7 @@ static void swap(char **v, size_t i, size_t j)
   v[j] = temp;
 }
 
-static void sortlines(char **v, size_t n)
+void sortlines(char **v, size_t n)
 {
   // do nothing if array contains fewer than two elements
   if (n < 2)
@@ -93,24 +96,3 @@ static void sortlines(char **v, size_t n)
   sortlines(v + last + 1, n - last - 1);
 }
 
-// sort input lines
-int main(void)
-{
-  char *lines[MAXLINES];
-  int n; // number of input lines read
-  if ((n = readlines(lines, MAXLINES)) > 0)
-  {
-    sortlines(lines, (size_t)n);
-    writelines(lines, (size_t)n);
-    for (size_t i = 0; i < (size_t)n; ++i)
-    {
-      free(lines[i]);
-    }
-    return 0;
-  }
-  else
-  {
-    fprintf(stderr, "error: input too big to sort\n");
-    return 1;
-  }
-}
