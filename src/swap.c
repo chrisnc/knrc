@@ -9,13 +9,10 @@
     y = swap_tmp;                                                              \
   } while (0)
 
-
+// MSVC does not like this idiom because the "conditional expression is
+// constant", so we write a special version that disables this warning.
 #ifdef _MSC_VER
 #undef swap
-
-// MSVC warning C4127 is for "conditional expression is constant",
-// which prevents the do {} while (0) multiline macro idiom,
-// so we disable it for just this case.
 #define swap(t, x, y)                                                          \
   do                                                                           \
   {                                                                            \
