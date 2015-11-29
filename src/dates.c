@@ -29,6 +29,16 @@ static int day_of_year(int year, int month, int day)
     day += daytab[leap][i];
   }
   return day;
+
+  // Exercise 5-9. page 114
+  // version using pointer arithmetic, commented out because it's harder to
+  // understand
+  /*
+  for (char *dpm = daytab[leap] + 1; dpm < daytab[leap] + month; ++dpm)
+  {
+    day += *dpm;
+  }
+  */
 }
 
 // month_day: set month, day from day of year
@@ -50,6 +60,18 @@ static void month_day(int year, int yearday, int *pmonth, int *pday)
   }
   *pmonth = i;
   *pday = yearday;
+
+  // Exercise 5-9. page 114
+  // version using pointer arithmetic, commented out because it's harder to
+  // understand
+  /*
+  char *dpm;
+  for (dpm = daytab[leap] + 1; yearday > *dpm; ++dpm)
+  {
+    yearday -= *dpm;
+  }
+  *pmonth = (char)(dpm - daytab[leap]);
+  */
 }
 
 // month_name: return name of the given month (1-12)
