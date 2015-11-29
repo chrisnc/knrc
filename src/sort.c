@@ -35,11 +35,8 @@ int main(void)
   }
 
   sortlines(lineptrs, nlines);
+  writelines(lineptrs, nlines);
 
-  for (size_t i = 0; i < nlines; ++i)
-  {
-    printf("%s", lineptrs[i]);
-  }
   return 0;
 }
 
