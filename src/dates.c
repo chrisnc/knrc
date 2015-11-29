@@ -37,7 +37,8 @@ static void month_day(int year, int yearday, int *pmonth, int *pday)
   int leap = is_leap_year(year);
   if (yearday < 1 || yearday > 365 + leap)
   {
-    fprintf(stderr, "month_day: invalid yearday %d for year %d\n", yearday, year);
+    fprintf(stderr, "month_day: invalid yearday %d for year %d\n", yearday,
+            year);
     *pmonth = -1;
     *pday = -1;
     return;
@@ -51,6 +52,18 @@ static void month_day(int year, int yearday, int *pmonth, int *pday)
   *pday = yearday;
 }
 
+// month_name: return name of the given month (1-12)
+static const char *month_name(int m)
+{
+  static const char *names[] = {
+      "Illegal month", "January",  "February", "March",  "April",
+      "May",           "June",     "July",     "August", "September",
+      "October",       "November", "December",
+  };
+
+  return (m < 1 || m > 12) ? names[0] : names[m];
+}
+
 int main(void)
 {
   struct
@@ -59,9 +72,8 @@ int main(void)
     int m;
     int d;
   } ymd_tests[8] = {
-      {1990, 5, 23},  {1986, 1, 23}, {1887, 2, 28},
-      {2015, 10, 31}, {2012, 2, 29}, {1887, 2, 29},
-      {2015, -3, 31}, {2012, 4, 35},
+      {1990, 5, 23}, {1986, 1, 23}, {1887, 2, 28},  {2015, 10, 31},
+      {2012, 2, 29}, {1887, 2, 29}, {2015, -3, 31}, {2012, 4, 35},
   };
 
   for (size_t i = 0; i < 8; ++i)
@@ -83,6 +95,7 @@ int main(void)
     printf("day_of_year(%d, %d, %d) = %d\n", ymd_tests[i].y, ymd_tests[i].m,
            ymd_tests[i].d, yday);
     printf("month_day(%d, %d) = (%d, %d)\n", ymd_tests[i].y, yday, m, d);
+    printf("month_name(%d) = \"%s\"\n", m, month_name(m));
   }
 
   struct
@@ -98,6 +111,7 @@ int main(void)
   {
     int m, d;
     month_day(yday_tests[i].y, yday_tests[i].yday, &m, &d);
+    printf("month_name(%d) = \"%s\"\n", m, month_name(m));
     if (m < 0 || d < 0)
     {
       continue;
