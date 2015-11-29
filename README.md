@@ -8,16 +8,15 @@ by Kernighan and Ritchie.
 
 ##### All systems
 
-- [`scons`](http://www.scons.org) (often available from a package
-manager as well). `scons` itself requires [Python 2.7](https://www.python.org/downloads/).
+- [`scons`](http://www.scons.org)
 
 ##### OS X
 
-- [Xcode command line tools](https://developer.apple.com/downloads/).
+- [Xcode command line tools](https://developer.apple.com/downloads/)
 
 ##### Linux
 
-- `gcc`. This is usually available from your package manager.
+- `gcc`
 - [`libbsd`](http://libbsd.freedesktop.org/wiki/)
 
 ##### Windows
