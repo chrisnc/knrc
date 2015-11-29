@@ -5,6 +5,10 @@
 #define _CRT_RAND_S
 #endif // _MSC_VER
 
+#ifdef linux
+#include <bsd/stdlib.h>
+#endif
+
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
@@ -16,7 +20,7 @@
 // implement arc4random in terms of MSVC's rand_s
 static uint32_t arc4random(void)
 {
-  unsigned res;
+  uint32_t res;
   rand_s(&res);
   return res;
 }

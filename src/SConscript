@@ -4,19 +4,24 @@ import os
 
 env = Environment()
 
+platform = env['PLATFORM']
+
 # Clang
-if env['PLATFORM'] == 'darwin':
+if platform == 'darwin':
     # SCons invokes 'gcc' normally on OS X.
     # Usually this is just clang but with options that we don't need.
     env['CC'] = 'clang'
     env.Append(CFLAGS = ['-Weverything', '-Werror', '-O3'])
 
 # GCC
-if env['PLATFORM'] == 'linux':
-    env.Append(CFLAGS = ['-Wall', '-Wextra', '-Wpedantic', '-Werror', '-O3'])
+if platform == 'posix':
+    env.Append(
+        CFLAGS = ['-Wall', '-Wextra', '-Wpedantic', '-Werror', '-O3'],
+        LIBS = ['m', 'bsd'],
+    )
 
 # MSVC
-if env['PLATFORM'] == 'win32':
+if platform == 'win32':
     env.Append(CFLAGS = ['/W4', '/WX', '/Ox'])
 
 # for color terminal output when available

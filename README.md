@@ -1,17 +1,32 @@
 # K&R C
 
-Exercises and examples from [_The C Programming Language_](https://en.wikipedia.org/wiki/The_C_Programming_Language)
+Exercises and examples from
+[_The C Programming Language_](https://en.wikipedia.org/wiki/The_C_Programming_Language)
 by Kernighan and Ritchie.
+
+### Dependencies
+
+##### All systems
+
+- [`scons`](http://www.scons.org) (often available from a package
+manager as well). `scons` itself requires [Python 2.7](https://www.python.org/downloads/).
+
+##### OS X
+
+- [Xcode command line tools](https://developer.apple.com/downloads/).
+
+##### Linux
+
+- `gcc`. This is usually available from your package manager.
+- [`libbsd`](http://libbsd.freedesktop.org/wiki/)
+
+##### Windows
+
+- [Microsoft Visual Studio](https://www.visualstudio.com/en-us/downloads/download-visual-studio-vs.aspx)
 
 ### Building
 
-The examples have been built successfully on Linux, OS X, and Windows.
+- `cd knrc`
+- `scons`
 
-To build them yourself, first make sure you have the standard compiler for your
-platform: `gcc` for Linux, `clang` for OS X, and MSVC for Windows.
-
-Then, install [`scons`](http://www.scons.org) (often available from a package
-manager).
-
-Finally, run `scons` from the base directory of this repository. This will
-build all the object files and executables and place them in `knrc/build`.
+This will build all the object files and executables and place them in `knrc/build`.
