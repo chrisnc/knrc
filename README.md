@@ -26,7 +26,6 @@ manager as well). `scons` itself requires [Python 2.7](https://www.python.org/do
 
 ### Building
 
-- `cd knrc`
-- `scons`
+From the top-level directory, run `scons`.
 
 This will build all the object files and executables and place them in `knrc/build`.
