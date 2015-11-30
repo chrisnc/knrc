@@ -1,82 +1,84 @@
+#include "vector.h"
+
 #include <stdint.h>
 #include <stdlib.h>
 #include <string.h>
 
-#include "vector.h"
-
-struct vector
+size_t vector_size(const struct vector *v)
 {
-  size_t n_elems;
-  size_t n_allocated;
-  size_t elem_size;
-  uint8_t *elems;
-};
-
-size_t vector_size(struct vector *s)
-{
-  return s->n_elems;
+  return v->n_elems;
 }
 
-void *vector_back(struct vector *s)
+static void *at(const struct vector *v, size_t i)
 {
-  if (s->n_elems == 0)
+  if (i >= v->n_elems)
   {
     return NULL;
   }
-  return s->elems + ((s->n_elems - 1) * s->elem_size);
+  return ((uint8_t *)v->data) + (i * v->elem_size);
 }
 
-void *vector_get(struct vector *s, size_t i)
+void *vector_at(struct vector *v, size_t i)
 {
-  if (i >= s->n_elems)
+  return at(v, i);
+}
+
+const void *vector_at_const(const struct vector *v, size_t i)
+{
+  return at(v, i);
+}
+
+void *vector_back(struct vector *v)
+{
+  return at(v, vector_size(v) - 1);
+}
+
+const void *vector_back_const(const struct vector *v)
+{
+  return at(v, vector_size(v) - 1);
+}
+
+void vector_pop_back(struct vector *v)
+{
+  if (v->n_elems > 0)
   {
-    return NULL;
+    --v->n_elems;
   }
-  return s->elems + (i * s->elem_size);
 }
 
-void vector_pop_back(struct vector *s)
+void vector_push_back(struct vector *v, const void *e)
 {
-  if (s->n_elems > 0)
+  if (v->n_elems == v->n_allocated)
   {
-    --s->n_elems;
+    v->n_allocated <<= 1;
+    v->data = realloc(v->data, v->elem_size * v->n_allocated);
   }
+  memcpy(vector_at(v, v->n_elems++), e, v->elem_size);
 }
 
-void vector_push_back(struct vector *s, void *e)
+void vector_swap(struct vector *v, size_t i, size_t j)
 {
-  if (s->n_elems == s->n_allocated)
-  {
-    if (s->n_allocated == 0)
-    {
-      ++s->n_allocated;
-    }
-    else
-    {
-      s->n_allocated <<= 1;
-    }
-    s->elems = realloc(s->elems, s->elem_size * s->n_allocated);
-  }
-  memcpy(s->elems + ((s->n_elems++) * s->elem_size), e, s->elem_size);
+  uint8_t *tmpbuf = malloc(v->elem_size);
+  memcpy(tmpbuf, vector_at(v, i), v->elem_size);
+  memcpy(vector_at(v, i), vector_at(v, j), v->elem_size);
+  memcpy(vector_at(v, j), tmpbuf, v->elem_size);
+  free(tmpbuf);
 }
 
-struct vector *vector_new(size_t elem_size)
+void vector_init(struct vector *v, size_t elem_size)
 {
-  return vector_new_alloc(elem_size, 0);
+  vector_init_with_capacity(v, elem_size, 1);
 }
 
-struct vector *vector_new_alloc(size_t elem_size, size_t initial_alloc)
+void vector_init_with_capacity(struct vector *v, size_t elem_size, size_t capacity)
 {
-  struct vector *s = malloc(sizeof(*s));
-  s->n_elems = 0;
-  s->n_allocated = initial_alloc;
-  s->elem_size = elem_size;
-  s->elems = malloc(s->n_allocated * s->elem_size);
-  return s;
+  v->n_elems = 0;
+  v->n_allocated = capacity;
+  v->elem_size = elem_size;
+  v->data = malloc(v->n_allocated * v->elem_size);
 }
 
-void vector_free(struct vector *s)
+void vector_deinit(struct vector *v)
 {
-  free(s->elems);
-  free(s);
+  free(v->data);
 }

@@ -30,6 +30,7 @@ if 'TERM' in os.environ:
 
 getline = env.StaticLibrary('getline.c')
 vector = env.StaticLibrary('vector.c')
+heap = env.StaticLibrary(['heap.c', 'vector.c'])
 
 programs = [
     # Chapter 1
@@ -80,6 +81,9 @@ programs = [
     'strcmp.c',
     'strcpy.c',
     'alloc.c',
+
+    # Miscellaneous
+    ['test_heap.c', heap]
 ]
 
 for p in programs:

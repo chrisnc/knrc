@@ -15,6 +15,8 @@ struct char_info
   int c;
 };
 
+VECTOR_TEMPLATE(struct char_info, char_info)
+
 #define NORMAL 0
 #define OPENING_SLASH 1
 #define C_COMMENT 2
@@ -31,7 +33,7 @@ static bool bracket_match(int x, int y)
          (x == '[' && y == ']');
 }
 
-static int normal(int c, struct vector *s, int line, int col)
+static int normal(int c, struct vector *v, int line, int col)
 {
   switch (c)
   {
@@ -49,16 +51,16 @@ static int normal(int c, struct vector *s, int line, int col)
     ci.c = c;
     ci.line = line;
     ci.col = col;
-    vector_push_back(s, &ci);
+    vector_push_back_char_info(v, &ci);
     break;
   }
   case '}':
   case ']':
   case ')':
-    if (vector_size(s) > 0)
+    if (vector_size(v) > 0)
     {
-      struct char_info *ci = vector_back(s);
-      vector_pop_back(s);
+      struct char_info *ci = vector_back_char_info(v);
+      vector_pop_back(v);
       if (!bracket_match(ci->c, c))
       {
         printf("line %d, col %d: '%c' is not closed, unexpected '%c' on "
@@ -144,14 +146,15 @@ int main(void)
   int state = NORMAL;
   int line = 1;
   int col = 0;
-  struct vector *s = vector_new(sizeof(struct char_info));
+  struct vector v;
+  vector_init_char_info(&v);
   while ((c = getchar()) != EOF)
   {
     ++col;
     switch (state)
     {
     case NORMAL:
-      state = normal(c, s, line, col);
+      state = normal(c, &v, line, col);
       break;
     case OPENING_SLASH:
       state = opening_slash(c);
@@ -187,5 +190,5 @@ int main(void)
       col = 0;
     }
   }
-  vector_free(s);
+  vector_deinit(&v);
 }
