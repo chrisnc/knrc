@@ -1,5 +1,7 @@
 #include <stdio.h>
 
+// strcmp example, page 106
+
 int strcmp_arr(const char *s, const char *t);
 int strcmp_ptr(const char *s, const char *t);
 

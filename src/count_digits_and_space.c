@@ -1,5 +1,8 @@
 #include <stdio.h>
 
+// character counting example with arrays, page 22
+
+// count digits, white space, others
 int main(void)
 {
   int nwhite, nother;

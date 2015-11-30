@@ -1,5 +1,7 @@
 #include <stdio.h>
 
+// alloc example, page 101-102
+
 void *alloc(size_t n);
 void afree(void *p);
 

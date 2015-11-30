@@ -1,5 +1,7 @@
 #include <stdio.h>
 
+// example of using external variables, page 32
+
 #define MAXLINE 1000 // maximum input line size
 
 static size_t max;            // maximum length seen so far

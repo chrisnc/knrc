@@ -1,5 +1,7 @@
 #include <stdio.h>
 
+// power function examples, page 24-26
+
 int power_first(int base, int n);
 int power(int base, int n);
 

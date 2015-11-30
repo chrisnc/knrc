@@ -28,45 +28,59 @@ if platform == 'win32':
 if 'TERM' in os.environ:
     env['ENV']['TERM'] = os.environ['TERM']
 
-getline = env.StaticLibrary('getline', ['getline.c'])
-vector = env.StaticLibrary('vector', ['vector.c'])
+getline = env.StaticLibrary(['getline.c'])
+vector = env.StaticLibrary(['vector.c'])
 
-env.Program('alloc', ['alloc.c'])
-env.Program('atof', ['atof.c'])
-env.Program('atoi', ['atoi.c'])
-env.Program('bits', ['bits.c'])
-env.Program('charhist', ['charhist.c'])
-env.Program('chario', ['chario.c'])
-env.Program('control', ['control.c'])
-env.Program('count_digits_and_space', ['count_digits_and_space.c'])
-env.Program('dates', ['dates.c'])
-env.Program('decomment', ['decomment.c'])
-env.Program('detab', ['detab.c', getline])
-env.Program('entab', ['entab.c', getline])
-env.Program('escape', ['escape.c', getline])
-env.Program('expand', ['expand.c', getline])
-env.Program('fold', ['fold.c'])
-env.Program('getint', ['getint.c'])
-env.Program('hello', ['hello.c'])
-env.Program('limits', ['limits.c'])
-env.Program('lines', ['lines.c', getline])
-env.Program('matcher', ['matcher.c', getline])
-env.Program('maxline_extern', ['maxline_extern.c'])
-env.Program('misc', ['misc.c'])
-env.Program('power', ['power.c'])
-env.Program('qsort', ['qsort.c'])
-env.Program('recur', ['recur.c'])
-env.Program('rpn', ['rpn.c', getline, vector])
-env.Program('rpn_char', ['rpn_char.c'])
-env.Program('shellsort', ['shellsort.c'])
-env.Program('simplecheck', ['simplecheck.c', vector])
-env.Program('sort', ['sort.c', getline])
-env.Program('strs_test', ['strs_test.c', 'strs.c'])
-env.Program('strcmp', ['strcmp.c'])
-env.Program('strcpy', ['strcpy.c'])
-env.Program('swap', ['swap.c'])
-env.Program('temperature', ['temperature.c'])
-env.Program('unescape', ['unescape.c', getline])
-env.Program('wc', ['wc.c'])
-env.Program('wlhist', ['wlhist.c'])
-env.Program('words', ['words.c'])
+programs = [
+    # Chapter 1
+    'hello.c',
+    'charhist.c',
+    'chario.c',
+    'decomment.c',
+    ['detab.c', getline],
+    ['entab.c', getline],
+    'fold.c',
+    ['lines.c', getline],
+    'maxline_extern.c',
+    'power.c',
+    ['simplecheck.c', vector],
+    'temperature.c',
+    'wc.c',
+    'wlhist.c',
+    'words.c',
+    'count_digits_and_space.c',
+
+    # Chapter 2
+    'atoi.c',
+    'bits.c',
+    'limits.c',
+    'misc.c',
+    ['strs_test.c', 'strs.c'],
+
+    # Chapter 3
+    'control.c',
+    ['escape.c', getline],
+    ['expand.c', getline],
+    'shellsort.c',
+    ['unescape.c', getline],
+
+    # Chapter 4
+    'atof.c',
+    ['matcher.c', getline],
+    'qsort.c',
+    'recur.c',
+    'rpn_char.c',
+    ['rpn.c', getline, vector],
+    'swap.c',
+
+    # Chapter 5
+    'dates.c',
+    'getint.c',
+    ['sort.c', getline],
+    'strcmp.c',
+    'strcpy.c',
+    'alloc.c',
+]
+
+for p in programs:
+    env.Program(p)

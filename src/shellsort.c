@@ -1,5 +1,7 @@
 #include <stdio.h>
 
+// shellsort example, page 62
+
 // shellsort: sort v[0]...v[n-1] into increasing order
 static void shellsort(int v[], int n)
 {
