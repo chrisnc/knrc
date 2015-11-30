@@ -14,56 +14,48 @@ int main(void)
 
   while ((len = my_getline(line, MAXLINE)) > 0)
   {
-    for (size_t s = 0; s < len;)
+    size_t next_t;
+    for (size_t t = 0; t < len; t = next_t)
     {
-      // find the index of the last character before the next tab stop
-      size_t e;
-      for (e = s; e < s + TABSTOP - 1; ++e)
+      next_t = t + TABSTOP;
+      size_t blanks_to_replace = 0;
+      size_t i;
+      for (i = t; i < t + TABSTOP && i < len; ++i)
       {
-        if (line[e] == '\t')
+        if (line[i] == ' ')
         {
+          ++blanks_to_replace;
+        }
+        else if (line[i] == '\t')
+        {
+          next_t = i + 1;
+          blanks_to_replace = TABSTOP;
           break;
         }
-      }
-      size_t next_s = e + 1;
-      size_t blanks_to_replace = 0;
-      if (e >= len) // the line doesn't reach the next tab stop
-      {
-        e = len - 1;
-      }
-      else
-      {
-        // walk back from the last character until there are no more
-        // consecutive spaces and tabs
-        for (; e >= s; --e)
+        else
         {
-          if (line[e] == ' ')
+          while (blanks_to_replace > 0)
           {
-            ++blanks_to_replace;
+            putchar(' ');
+            --blanks_to_replace;
           }
-          else if (line[e] == '\t')
-          {
-            blanks_to_replace += TABSTOP;
-          }
-          else
-          {
-            break;
-          }
+          putchar(line[i]);
         }
       }
-      for (size_t i = s; i <= e; ++i)
+      // line ended before the next tabstop
+      if (i + 1 < next_t)
       {
-        putchar(line[i]);
+        while (blanks_to_replace > 0)
+        {
+          putchar(' ');
+          --blanks_to_replace;
+        }
+        break;
       }
-      if (blanks_to_replace == 1)
-      {
-        putchar(' ');
-      }
-      else if (blanks_to_replace > 1)
+      if (blanks_to_replace >= 1)
       {
         putchar('\t');
       }
-      s = next_s;
     }
   }
 }
