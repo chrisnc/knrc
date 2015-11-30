@@ -28,8 +28,8 @@ if platform == 'win32':
 if 'TERM' in os.environ:
     env['ENV']['TERM'] = os.environ['TERM']
 
-getline = env.StaticLibrary(['getline.c'])
-vector = env.StaticLibrary(['vector.c'])
+getline = env.StaticLibrary('getline.c')
+vector = env.StaticLibrary('vector.c')
 
 programs = [
     # Chapter 1
