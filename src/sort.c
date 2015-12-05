@@ -2,6 +2,7 @@
 #include <string.h>
 
 #include "getline.h"
+#include "heap.h"
 
 // line sorting example from page 107-110
 
@@ -10,6 +11,13 @@ void sortlines(char **v, size_t n);
 
 #define MAXLINES 5000 // max # lines to be sorted
 #define MAXLEN 1000   // max length of any input line
+
+static int strcmp_void(const void *a, const void *b)
+{
+  return strcmp(*(const char *const *)a, *(const char *const *)b);
+}
+
+HEAP_TEMPLATE_CMP(const char *, line, strcmp_void)
 
 int main(void)
 {
@@ -20,8 +28,9 @@ int main(void)
   // Need to use one extra line to read into to determine if there is input
   // beyond MAXLINES.
   char lines[MAXLINES + 1][MAXLEN];
-  char *lineptrs[MAXLINES];
   size_t nlines = 0;
+  struct heap lineptrs;
+  heap_init_line(&lineptrs);
   size_t len;
   while ((len = my_getline(lines[nlines], MAXLEN)) > 0)
   {
@@ -30,12 +39,14 @@ int main(void)
       fprintf(stderr, "error: input too big to sort\n");
       return 1;
     }
-    lineptrs[nlines] = lines[nlines];
-    ++nlines;
+    heap_insert_line(&lineptrs, lines[nlines++]);
   }
 
-  sortlines(lineptrs, nlines);
-  writelines(lineptrs, nlines);
+  while (heap_size(&lineptrs) > 0)
+  {
+    printf("%s", *heap_min_line(&lineptrs));
+    heap_pop_min(&lineptrs);
+  }
 
   return 0;
 }
@@ -63,7 +74,7 @@ int main(void)
 // cast may indicate a deeper problem which the cast doesn't really fix."
 void writelines(char **lineptr, size_t nlines)
 {
-  while (nlines-- > 0)
+  for (; nlines > 0; --nlines)
   {
     printf("%s", *lineptr++);
   }

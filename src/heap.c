@@ -32,61 +32,60 @@ static inline const void *at(const struct heap *h, size_t i)
 
 static void bubble_up(struct heap *h, size_t i)
 {
-  if (i == 0)
-  {
-    return;
-  }
   size_t p = parent(i);
-  if (h->cmp(at(h, i), at(h, p)) < 0)
+  while (i != 0 && h->cmp(at(h, i), at(h, p)) < 0)
   {
     vector_swap(&h->v, i, p);
-    bubble_up(h, p);
+    i = p;
+    p = parent(i);
   }
 }
 
 static void bubble_down(struct heap *h, size_t i)
 {
+  size_t sz = heap_size(h);
   size_t l = left_child(i);
   size_t r = right_child(i);
-  size_t sz = heap_size(h);
 
-  if (l >= sz) // i has no children
+  for (; l < sz; l = left_child(i), r = right_child(i))
   {
-    return;
-  }
+    const void *iptr = at(h, i);
+    const void *lptr = at(h, l);
+    int l_cmp_i = h->cmp(lptr, iptr);
 
-  const void *iptr = at(h, i);
-  const void *lptr = at(h, l);
+    int l_cmp_r, r_cmp_i;
 
-  int lcmpi = h->cmp(lptr, iptr);
+    if (r < sz) // i has a right child
+    {
+      const void *rptr = at(h, r);
+      l_cmp_r = h->cmp(lptr, rptr);
+      r_cmp_i = h->cmp(rptr, iptr);
+    }
+    else // i has no right child
+    {
+      l_cmp_r = -1;
+      r_cmp_i = 1;
+    }
 
-  if (r >= sz) // i has only a left child
-  {
-    if (lcmpi < 0) // l < i
+    if (l_cmp_i < 0 && l_cmp_r < 0) // l < i && l < r
     {
       vector_swap(&h->v, i, l);
-      bubble_down(h, l);
+      i = l;
     }
-    return;
-  }
-
-  const void *rptr = at(h, r);
-  int lcmpr = h->cmp(lptr, rptr);
-  int rcmpi = h->cmp(rptr, iptr);
-
-  if (lcmpi < 0 && lcmpr < 0) // l < i && l < r
-  {
-    vector_swap(&h->v, i, l);
-    bubble_down(h, l);
-  }
-  else if (rcmpi < 0) // (r < i <= l) || (r < i && r <= l)
-  {
-    vector_swap(&h->v, i, r);
-    bubble_down(h, r);
+    else if (r_cmp_i < 0) // (r < i <= l) || (r < i && r <= l)
+    {
+      vector_swap(&h->v, i, r);
+      i = r;
+    }
+    else
+    {
+      break;
+    }
   }
 }
 
-void heap_init(struct heap *h, size_t elem_size, int (*cmp)(const void *, const void *))
+void heap_init(struct heap *h, size_t elem_size,
+               int (*cmp)(const void *, const void *))
 {
   vector_init(&h->v, elem_size);
   h->cmp = cmp;
