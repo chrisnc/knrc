@@ -22,7 +22,10 @@ if platform == 'posix':
 
 # MSVC
 if platform == 'win32':
-    env.Append(CFLAGS = ['/W4', '/WX', '/Ox'])
+    env.Append(
+        CFLAGS = ['/W4', '/WX', '/Ox'],
+        CPPDEFINES = ['_CRT_RAND_S'],
+    )
 
 # for color terminal output when available
 if 'TERM' in os.environ:

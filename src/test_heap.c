@@ -2,6 +2,7 @@
 #include <stdint.h>
 #include <stdlib.h>
 
+#include "arc4random.h"
 #include "heap.h"
 
 HEAP_TEMPLATE(uint32_t, u32)

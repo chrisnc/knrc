@@ -1,30 +1,15 @@
 #ifdef _MSC_VER
 // allow strncpy and friends for testing
 #define _CRT_SECURE_NO_WARNINGS
-// expose rand_s from stdlib.h
-#define _CRT_RAND_S
 #endif // _MSC_VER
 
-#ifdef linux
-#include <bsd/stdlib.h>
-#endif
+#include "arc4random.h"
+#include "strs.h"
 
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
 #include <stdint.h>
-
-#include "strs.h"
-
-#ifdef _MSC_VER
-// implement arc4random in terms of MSVC's rand_s
-static uint32_t arc4random(void)
-{
-  uint32_t res;
-  rand_s(&res);
-  return res;
-}
-#endif // _MSC_VER
 
 // make a random string with a random length inside
 // the length n buffer s
