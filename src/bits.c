@@ -29,9 +29,9 @@ unsigned invert(unsigned x, int p, int n)
 // returns x rotated right by n positions
 unsigned rightrot(unsigned x, int n)
 {
-  static const int s = sizeof(unsigned) * CHAR_BIT;
-  n %= s;     // required to avoid overly large shifts
-  if (n == 0) // a shift of (s - 0) is undefined
+  static const size_t s = sizeof(unsigned) * CHAR_BIT;
+  n = (unsigned)n % s; // required to avoid overly large shifts
+  if (n == 0)          // a shift of (s - 0) is undefined
   {
     return x;
   }
@@ -97,6 +97,12 @@ int main(void)
   printf("getbits(0x%x, %d, %d) = 0x%x\n", z, p, n, getbits(z, p, n));
   printf("invert(0x%x, %d, %d) = 0x%x\n", z, p, n, invert(z, p, n));
   n = -36;
+  printf("rightrot(0x%x, %d) = 0x%x\n", z, n, rightrot(z, n));
+
+  n = 0;
+  printf("rightrot(0x%x, %d) = 0x%x\n", z, n, rightrot(z, n));
+
+  n = INT_MIN;
   printf("rightrot(0x%x, %d) = 0x%x\n", z, n, rightrot(z, n));
 
   printf("bitcount(0x%x) = %d\n", z, bitcount(z));
