@@ -54,15 +54,17 @@ void squeeze_str(char s[], char e[])
 }
 
 // Exercise 2-5. page 48
-int any(const char s[], const char t[])
+// Exercise 5-6. page 107
+// modified to use pointer arithmetic
+int any(const char *s, const char *t)
 {
-  for (int i = 0; s[i] != '\0'; ++i)
+  for (const char *p = s; *p; ++p)
   {
-    for (int j = 0; t[j] != '\0'; ++j)
+    for (const char *q = t; *q; ++q)
     {
-      if (s[i] == t[j])
+      if (*p == *q)
       {
-        return i;
+        return (int)(p - s);
       }
     }
   }
@@ -130,7 +132,7 @@ int strend(const char *s, const char *t)
 char *my_strncpy(char *s, const char *t, size_t n)
 {
   char *sstart = s;
-  for (; n && *t; --n, ++s, ++t)
+  for (; n > 0 && *t; --n, ++s, ++t)
   {
     *s = *t;
   }
@@ -148,7 +150,7 @@ char *my_strncat(char *s, const char *t, size_t n)
   {
     ++s;
   }
-  for (; n && (*s++ = *t++) != '\0'; --n)
+  for (; n > 0 && (*s++ = *t++) != '\0'; --n)
   {
   }
   if (n == 0)
@@ -160,7 +162,7 @@ char *my_strncat(char *s, const char *t, size_t n)
 
 int my_strncmp(const char *s, const char *t, size_t n)
 {
-  for (; n && *s && (*s == *t); --n, ++s, ++t)
+  for (; n > 0 && *s && (*s == *t); --n, ++s, ++t)
   {
   }
   return n ? *s - *t : 0;

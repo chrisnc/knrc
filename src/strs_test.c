@@ -150,19 +150,9 @@ int main(void)
     int cmp1 = strncmp(cmps1, cmps2, n);
     int cmp2 = my_strncmp(cmps1, cmps2, n);
 
-#ifdef _MSC_VER
-    // on Windows, strncmp only returns -1, 0, or 1.
-    if (cmp2 < 0)
-    {
-      cmp2 = -1;
-    }
-    else if (cmp2 > 0)
-    {
-      cmp2 = 1;
-    }
-#endif
-
-    if (cmp1 != cmp2)
+    if ((cmp1 < 0 && cmp2 >= 0) ||
+        (cmp1 > 0 && cmp2 <= 0) ||
+        (cmp1 == 0 && cmp2 != 0))
     {
       printf("strncmp test failed\n");
       printf("s:\n");
