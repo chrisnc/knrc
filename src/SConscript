@@ -16,8 +16,9 @@ if platform == 'darwin':
 # GCC
 if platform == 'posix':
     env.Append(
-        CFLAGS = ['-Wall', '-Wextra', '-Wpedantic', '-Werror', '-O3'],
-        LIBS = ['m', 'bsd'],
+        CFLAGS = ['-Wall', '-Wextra', '-Wpedantic', '-Werror', '-g',
+            '-fsanitize=address,undefined'],
+        LIBS = ['asan', 'ubsan', 'm', 'bsd'],
     )
 
 # MSVC
@@ -63,10 +64,10 @@ programs = [
 
     # Chapter 3
     'control.c',
-    ['escape.c', getline],
+    ['escape.c'],
     ['expand.c', getline],
     'shellsort.c',
-    ['unescape.c', getline],
+    ['unescape.c'],
 
     # Chapter 4
     'atof.c',
