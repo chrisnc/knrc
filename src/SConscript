@@ -16,8 +16,10 @@ if platform == 'darwin':
 # GCC
 if platform == 'posix':
     env.Append(
-        CFLAGS = ['-Wall', '-Wextra', '-Wpedantic', '-Werror', '-g',
-            '-fsanitize=address,undefined'],
+        CFLAGS = [
+            '-Wall', '-Wextra', '-Wpedantic', '-Werror', '-g',
+            '-fsanitize=address,undefined',
+        ],
         LIBS = ['asan', 'ubsan', 'm', 'bsd'],
     )
 

@@ -14,7 +14,7 @@ unsigned getbits(unsigned x, int p, int n)
 // set the n bits in x starting at position p with the first n bits of y
 unsigned setbits(unsigned x, int p, int n, unsigned y)
 {
-  unsigned mask = ((~0U >> p) << p) & ~(~0U << (n + p));
+  const unsigned mask = ((~0U >> p) << p) & ~(~0U << (n + p));
   return (x & ~mask) | ((y << p) & mask);
 }
 
@@ -29,13 +29,18 @@ unsigned invert(unsigned x, int p, int n)
 // returns x rotated right by n positions
 unsigned rightrot(unsigned x, int n)
 {
-  static const size_t s = sizeof(unsigned) * CHAR_BIT;
-  n = (unsigned)n % s; // required to avoid overly large shifts
-  if (n == 0)          // a shift of (s - 0) is undefined
+  static const unsigned nbits = sizeof(unsigned) * CHAR_BIT;
+  const unsigned s = (unsigned)n % nbits; // required to avoid overly large shifts
+
+  // 0 <= s < nbits
+  // a left shift of (nbits - 0) is undefined
+  // so just return the input if asked to rotate by 0
+  if (s == 0)
   {
     return x;
   }
-  return (x >> n) | (x << (s - n));
+
+  return (x >> s) | (x << (nbits - s));
 }
 
 // bitcount: count 1 bits in x
