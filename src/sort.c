@@ -48,6 +48,8 @@ int main(void)
     heap_pop_min(&lineptrs);
   }
 
+  heap_deinit(&lineptrs);
+
   return 0;
 }
 
