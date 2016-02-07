@@ -11,8 +11,6 @@
 #define strtok_r strtok_s
 #endif // _MSC_VER
 
-VECTOR_TEMPLATE(double, double)
-
 // Exercise 4-10. page 79
 // Reverse Polish Notation calculator with getline
 
@@ -184,7 +182,7 @@ static struct vector stack;
 
 void init_stack(void)
 {
-  vector_init_double(&stack);
+  vector_init(&stack, sizeof(double));
 }
 
 void destroy_stack(void)
@@ -195,13 +193,13 @@ void destroy_stack(void)
 // push: push f onto value stack
 void push(double f)
 {
-  vector_push_back_double(&stack, &f);
+  vector_push_back(&stack, &f);
 }
 
 // pop: pop and return top value from stack
 double pop(void)
 {
-  double *p = vector_back_double(&stack);
+  double *p = vector_back(&stack);
   if (p == NULL)
   {
     printf("error: stack empty\n");

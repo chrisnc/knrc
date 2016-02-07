@@ -15,8 +15,6 @@ struct char_info
   int c;
 };
 
-VECTOR_TEMPLATE(struct char_info, char_info)
-
 #define NORMAL 0
 #define OPENING_SLASH 1
 #define C_COMMENT 2
@@ -51,7 +49,7 @@ static int normal(int c, struct vector *v, int line, int col)
     ci.c = c;
     ci.line = line;
     ci.col = col;
-    vector_push_back_char_info(v, &ci);
+    vector_push_back(v, &ci);
     break;
   }
   case '}':
@@ -59,7 +57,7 @@ static int normal(int c, struct vector *v, int line, int col)
   case ')':
     if (vector_size(v) > 0)
     {
-      struct char_info *ci = vector_back_char_info(v);
+      struct char_info *ci = vector_back(v);
       vector_pop_back(v);
       if (!bracket_match(ci->c, c))
       {
@@ -147,7 +145,7 @@ int main(void)
   int line = 1;
   int col = 0;
   struct vector v;
-  vector_init_char_info(&v);
+  vector_init(&v, sizeof(struct char_info));
   while ((c = getchar()) != EOF)
   {
     ++col;

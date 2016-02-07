@@ -24,39 +24,4 @@ void heap_insert(struct heap *h, const void *e);
 
 size_t heap_size(const struct heap *h);
 
-// some convenience macros for creating heaps of a particular type
-#define HEAP_TEMPLATE(type, name)                                              \
-  static int heap_##name##_cmp(const void *a, const void *b)                   \
-  {                                                                            \
-    type x = *(type const *)a;                                                 \
-    type y = *(type const *)b;                                                 \
-    if (x < y)                                                                 \
-    {                                                                          \
-      return -1;                                                               \
-    }                                                                          \
-    if (x > y)                                                                 \
-    {                                                                          \
-      return 1;                                                                \
-    }                                                                          \
-    return 0;                                                                  \
-  }                                                                            \
-  HEAP_TEMPLATE_CMP(type, name, heap_##name##_cmp)
-
-#define HEAP_TEMPLATE_CMP(type, name, cmp)                                     \
-                                                                               \
-  static inline void heap_init_##name(struct heap *h)                          \
-  {                                                                            \
-    heap_init(h, sizeof(type), cmp);                                           \
-  }                                                                            \
-                                                                               \
-  static inline type const *heap_min_##name(struct heap *h)                    \
-  {                                                                            \
-    return heap_min(h);                                                        \
-  }                                                                            \
-                                                                               \
-  static inline void heap_insert_##name(struct heap *h, type e)                \
-  {                                                                            \
-    heap_insert(h, &e);                                                        \
-  }
-
 #endif // HEAP_H

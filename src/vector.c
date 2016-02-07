@@ -15,7 +15,7 @@ static void *at(const struct vector *v, size_t i)
   {
     return NULL;
   }
-  return ((uint8_t *)v->data) + (i * v->elem_size);
+  return v->data + (i * v->elem_size);
 }
 
 void *vector_at(struct vector *v, size_t i)
@@ -58,7 +58,7 @@ void vector_push_back(struct vector *v, const void *e)
 
 void vector_swap(struct vector *v, size_t i, size_t j)
 {
-  uint8_t *tmpbuf = malloc(v->elem_size);
+  void *tmpbuf = malloc(v->elem_size);
   memcpy(tmpbuf, vector_at(v, i), v->elem_size);
   memcpy(vector_at(v, i), vector_at(v, j), v->elem_size);
   memcpy(vector_at(v, j), tmpbuf, v->elem_size);
