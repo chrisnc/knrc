@@ -8,7 +8,7 @@ struct vector
   size_t n_elems;
   size_t n_allocated;
   size_t elem_size;
-  unsigned char *data;
+  void *data;
 };
 
 size_t vector_size(const struct vector *v);

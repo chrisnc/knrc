@@ -15,7 +15,8 @@ static void *at(const struct vector *v, size_t i)
   {
     return NULL;
   }
-  return v->data + (i * v->elem_size);
+  unsigned char *p = v->data;
+  return p + (i * v->elem_size);
 }
 
 void *vector_at(struct vector *v, size_t i)
