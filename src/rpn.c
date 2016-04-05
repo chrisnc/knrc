@@ -31,11 +31,11 @@ int main(void)
   init_stack();
   char line[MAXLINE];
 
-  double ans = NAN;
+  double ans = (double)NAN;
   double vars[26];
   for (size_t i = 0; i < 26; ++i)
   {
-    vars[i] = NAN;
+    vars[i] = (double)NAN;
   }
 
   const char delims[] = " \n\t";
@@ -203,7 +203,7 @@ double pop(void)
   if (p == NULL)
   {
     printf("error: stack empty\n");
-    return NAN;
+    return (double)NAN;
   }
   double f = *p;
   vector_pop_back(&stack);

@@ -150,6 +150,6 @@ int main(void)
       printf("getfloat returned %d\n", r);
       return 1;
     }
-    printf("read %f\n", f);
+    printf("read %f\n", (double)f);
   }
 }

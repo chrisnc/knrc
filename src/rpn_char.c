@@ -21,11 +21,11 @@ int main(void)
   double x, y;
   char s[MAXOP];
 
-  double ans = NAN;
+  double ans = (double)NAN;
   double vars[26];
   for (size_t i = 0; i < 26; ++i)
   {
-    vars[i] = NAN;
+    vars[i] = (double)NAN;
   }
 
   while ((type = getop(s)) != EOF)
@@ -178,7 +178,7 @@ double pop(void)
   else
   {
     printf("error: stack empty\n");
-    return NAN;
+    return (double)NAN;
   }
 }
 

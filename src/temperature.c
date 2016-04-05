@@ -49,7 +49,7 @@ void fahr_to_celsius_floats(void)
   while (fahr <= UPPER)
   {
     celsius = fahr_to_celsius(fahr);
-    printf("%3.0f %6.1f\n", fahr, celsius);
+    printf("%3.0f %6.1f\n", (double)fahr, (double)celsius);
     fahr = fahr + STEP;
   }
 }
@@ -64,7 +64,7 @@ void celsius_to_fahr_floats(void)
   celsius = LOWER;
   while (celsius <= UPPER)
   {
-    printf("%3.0f %6.1f\n", celsius, celsius_to_fahr(celsius));
+    printf("%3.0f %6.1f\n", (double)celsius, (double)celsius_to_fahr(celsius));
     celsius = celsius + STEP;
   }
 }
@@ -75,7 +75,7 @@ void fahr_to_celsius_for(void)
 
   for (fahr = LOWER; fahr <= UPPER; fahr = fahr + STEP)
   {
-    printf("%3d %6.1f\n", fahr, fahr_to_celsius((float)fahr));
+    printf("%3d %6.1f\n", fahr, (double)fahr_to_celsius((float)fahr));
   }
 }
 
@@ -86,7 +86,7 @@ void fahr_to_celsius_for_reverse(void)
 
   for (fahr = UPPER; fahr >= LOWER; fahr = fahr - STEP)
   {
-    printf("%3d %6.1f\n", fahr, fahr_to_celsius((float)fahr));
+    printf("%3d %6.1f\n", fahr, (double)fahr_to_celsius((float)fahr));
   }
 }
 

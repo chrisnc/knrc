@@ -16,6 +16,6 @@ int main(void)
   printf("UINT_MAX = %u\n", UINT_MAX);
   printf("ULONG_MAX = %lu\n", ULONG_MAX);
 
-  printf("minimum float = %f\nmaximum float = %f\n", -FLT_MAX, FLT_MAX);
+  printf("minimum float = %f\nmaximum float = %f\n", (double)-FLT_MAX, (double)FLT_MAX);
   printf("minimum double = %f\nmaximum double = %f\n", -DBL_MAX, DBL_MAX);
 }
