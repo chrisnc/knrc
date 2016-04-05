@@ -70,7 +70,8 @@ void vector_init(struct vector *v, size_t elem_size)
   vector_init_with_capacity(v, elem_size, 1);
 }
 
-void vector_init_with_capacity(struct vector *v, size_t elem_size, size_t capacity)
+void vector_init_with_capacity(struct vector *v, size_t elem_size,
+                               size_t capacity)
 {
   v->n_elems = 0;
   v->n_allocated = capacity;

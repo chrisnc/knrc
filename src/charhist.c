@@ -1,5 +1,5 @@
-#include <stdio.h>
 #include <limits.h>
+#include <stdio.h>
 
 #define N_CHARS (1 << (sizeof(char) * CHAR_BIT))
 

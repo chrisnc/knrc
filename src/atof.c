@@ -1,5 +1,5 @@
-#include <stdio.h>
 #include <ctype.h>
+#include <stdio.h>
 
 // atof: convert string s to double
 static double atof(const char *s)

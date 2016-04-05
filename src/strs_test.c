@@ -6,10 +6,10 @@
 #include "arc4random.h"
 #include "strs.h"
 
-#include <stdio.h>
-#include <string.h>
-#include <stdlib.h>
 #include <stdint.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
 
 // make a random string with a random length inside
 // the length n buffer s
@@ -150,8 +150,7 @@ int main(void)
     int cmp1 = strncmp(cmps1, cmps2, n);
     int cmp2 = my_strncmp(cmps1, cmps2, n);
 
-    if ((cmp1 < 0 && cmp2 >= 0) ||
-        (cmp1 > 0 && cmp2 <= 0) ||
+    if ((cmp1 < 0 && cmp2 >= 0) || (cmp1 > 0 && cmp2 <= 0) ||
         (cmp1 == 0 && cmp2 != 0))
     {
       printf("strncmp test failed\n");

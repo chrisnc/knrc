@@ -1,8 +1,8 @@
+#include <limits.h>
+#include <stdbool.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include <limits.h>
-#include <stdbool.h>
 
 #include "control.h"
 
@@ -192,8 +192,8 @@ int main(void)
   printf("my_itoa(%d) = \"%s\"\n", -9000, str);
   // This line triggers undefined behavior, as the original my_itoa is broken
   // for INT_MIN. fixed_itoa does the right thing, however.
-  //my_itoa(INT_MIN, str);
-  //printf("my_itoa(%d) = \"%s\"\n", INT_MIN, str);
+  // my_itoa(INT_MIN, str);
+  // printf("my_itoa(%d) = \"%s\"\n", INT_MIN, str);
   fixed_itoa(INT_MIN, str);
   printf("fixed_itoa(%d) = \"%s\"\n", INT_MIN, str);
 

@@ -1,5 +1,5 @@
-#include <stdio.h>
 #include <stdbool.h>
+#include <stdio.h>
 
 // date conversion example, page 111
 // Exercise 5-8. page 112

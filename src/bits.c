@@ -1,5 +1,5 @@
-#include <stdio.h>
 #include <limits.h>
+#include <stdio.h>
 
 #include "bits.h"
 
@@ -30,7 +30,9 @@ unsigned invert(unsigned x, int p, int n)
 unsigned rightrot(unsigned x, int n)
 {
   static const unsigned nbits = sizeof(unsigned) * CHAR_BIT;
-  const unsigned s = (unsigned)n % nbits; // required to avoid overly large shifts
+
+  // required to avoid overly large shifts
+  const unsigned s = (unsigned)n % nbits;
 
   // 0 <= s < nbits
   // a left shift of (nbits - 0) is undefined
