@@ -1,3 +1,3 @@
 # SConstruct
 
-SConscript('src/SConscript', variant_dir = 'build', duplicate = False)
+SConscript('src/SConscript', variant_dir = 'dist', duplicate = False)
