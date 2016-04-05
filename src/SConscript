@@ -89,6 +89,7 @@ programs = [
     'strcmp.c',
     'strcpy.c',
     'alloc.c',
+    'echo.c',
 
     # Miscellaneous
     ['test_heap.c', heap]
