@@ -90,6 +90,7 @@ programs = [
     'strcpy.c',
     'alloc.c',
     'echo.c',
+    ['grep.c', getline],
 
     # Miscellaneous
     ['test_heap.c', heap]
