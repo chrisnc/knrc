@@ -91,6 +91,7 @@ programs = [
     'alloc.c',
     'echo.c',
     ['find.c', getline],
+    ['expr.c', vector],
 
     # Miscellaneous
     ['test_heap.c', heap]
