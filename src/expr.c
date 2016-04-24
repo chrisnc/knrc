@@ -5,6 +5,7 @@
 #include "vector.h"
 
 static void stack_init(void);
+static void stack_deinit(void);
 static double pop(void);
 static void push(double);
 
@@ -57,6 +58,7 @@ int main(int argc, char **argv)
 
   printf("%f\n", pop());
 
+  stack_deinit();
   return EXIT_SUCCESS;
 }
 
@@ -65,6 +67,11 @@ static struct vector stack;
 static void stack_init(void)
 {
   vector_init(&stack, sizeof(double));
+}
+
+static void stack_deinit(void)
+{
+  vector_deinit(&stack);
 }
 
 static void push(double x)
