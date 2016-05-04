@@ -7,6 +7,9 @@
 
 // sorting example with numerical or lexicographical sort, page 119
 
+// Exercise 5-14, page 121
+// modified to support reverse sorting
+
 #define MAXLINES 5000
 #define MAXLEN 5000
 
@@ -24,13 +27,40 @@ static int strcmp_void(const void *a, const void *b)
   return strcmp(*s, *t);
 }
 
+static void reverse_lines(char **lineptr, size_t nlines)
+{
+  for (size_t i = 0; i < nlines/2; ++i)
+  {
+    size_t j = nlines - i - 1;
+    char *tmp = lineptr[i];
+    lineptr[i] = lineptr[j];
+    lineptr[j] = tmp;
+  }
+}
+
 int main(int argc, char **argv)
 {
   bool numeric = false;
+  bool reverse = false;
 
-  if (argc > 1 && strcmp(argv[1], "-n") == 0)
+  while (--argc > 0 && (*++argv)[0] == '-')
   {
-    numeric = true;
+    char c;
+    while ((c = *++argv[0]))
+    {
+      switch (c)
+      {
+      case 'n':
+        numeric = true;
+        break;
+      case 'r':
+        reverse = true;
+        break;
+      default:
+        fprintf(stderr, "sort: illegal option %c\n", c);
+        return EXIT_FAILURE;
+      }
+    }
   }
 
   char **lineptr = calloc(MAXLINES, sizeof(*lineptr));
@@ -60,6 +90,11 @@ int main(int argc, char **argv)
 
   qsort((void **)lineptr, i, sizeof(lineptr[0]),
         (numeric ? numcmp : strcmp_void));
+
+  if (reverse)
+  {
+    reverse_lines(lineptr, i);
+  }
 
   for (size_t j = 0; j < i; ++j)
   {
