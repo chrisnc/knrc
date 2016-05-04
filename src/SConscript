@@ -58,6 +58,7 @@ programs = [
     'echo.c',
     ['find.c', getline],
     ['expr.c', vector],
+    ['tail.c', getline],
 
     # Miscellaneous
     ['test_heap.c', heap]
