@@ -51,7 +51,7 @@ programs = [
     # Chapter 5
     'dates.c',
     'getint.c',
-    ['sort.c', getline, heap],
+    ['sort.c', getline],
     'strcmp.c',
     'strcpy.c',
     'alloc.c',
@@ -61,7 +61,8 @@ programs = [
     ['tail.c', getline],
 
     # Miscellaneous
-    ['test_heap.c', heap]
+    ['heapsort.c', heap, getline],
+    ['test_heap.c', heap],
 ]
 
 for p in programs:
