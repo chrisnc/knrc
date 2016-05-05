@@ -3,6 +3,8 @@
 #include <stdlib.h>
 #include <string.h>
 
+#include <strings.h> // for strcasecmp
+
 #include "getline.h"
 
 // sorting example with numerical or lexicographical sort, page 119
@@ -10,26 +12,36 @@
 // Exercise 5-14, page 121
 // modified to support reverse sorting
 
+// Exercise 5-15, page 121
+// modified to support case-insensitive sorting
+
 #define MAXLINES 5000
 #define MAXLEN 5000
 
 static int numcmp(const void *a, const void *b)
 {
-  const char *const *s = a;
-  const char *const *t = b;
+  const char *const *const s = a;
+  const char *const *const t = b;
   return atoi(*s) - atoi(*t);
 }
 
 static int strcmp_void(const void *a, const void *b)
 {
-  const char *const *s = a;
-  const char *const *t = b;
+  const char *const *const s = a;
+  const char *const *const t = b;
   return strcmp(*s, *t);
+}
+
+static int strcasecmp_void(const void *a, const void *b)
+{
+  const char *const *const s = a;
+  const char *const *const t = b;
+  return strcasecmp(*s, *t);
 }
 
 static void reverse_lines(char **lineptr, size_t nlines)
 {
-  for (size_t i = 0; i < nlines/2; ++i)
+  for (size_t i = 0; i < nlines / 2; ++i)
   {
     size_t j = nlines - i - 1;
     char *tmp = lineptr[i];
@@ -40,8 +52,9 @@ static void reverse_lines(char **lineptr, size_t nlines)
 
 int main(int argc, char **argv)
 {
-  bool numeric = false;
   bool reverse = false;
+
+  int (*cmp)(const void *, const void *) = strcmp_void;
 
   while (--argc > 0 && (*++argv)[0] == '-')
   {
@@ -51,10 +64,13 @@ int main(int argc, char **argv)
       switch (c)
       {
       case 'n':
-        numeric = true;
+        cmp = numcmp;
         break;
       case 'r':
         reverse = true;
+        break;
+      case 'f':
+        cmp = strcasecmp_void;
         break;
       default:
         fprintf(stderr, "sort: illegal option %c\n", c);
@@ -88,8 +104,7 @@ int main(int argc, char **argv)
     }
   }
 
-  qsort((void **)lineptr, i, sizeof(lineptr[0]),
-        (numeric ? numcmp : strcmp_void));
+  qsort((void **)lineptr, i, sizeof(lineptr[0]), cmp);
 
   if (reverse)
   {
