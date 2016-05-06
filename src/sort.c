@@ -1,8 +1,8 @@
+#include <ctype.h>
 #include <stdbool.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-
 #include <strings.h> // for strcasecmp
 
 #include "getline.h"
@@ -15,47 +15,67 @@
 // Exercise 5-15, page 121
 // modified to support case-insensitive sorting
 
+// Exercise 5-16, page 121
+// modified to support directory sort order
+
 #define MAXLINES 5000
 #define MAXLEN 5000
 
-static int numcmp(const void *a, const void *b)
-{
-  const char *const *const s = a;
-  const char *const *const t = b;
-  return atoi(*s) - atoi(*t);
-}
+static bool reverse = false;
+static bool numeric = false;
+static bool directory = false;
+static bool case_insensitive = false;
 
-static int strcmp_void(const void *a, const void *b)
+static const char *dirskip(const char *s)
 {
-  const char *const *const s = a;
-  const char *const *const t = b;
-  return strcmp(*s, *t);
-}
-
-static int strcasecmp_void(const void *a, const void *b)
-{
-  const char *const *const s = a;
-  const char *const *const t = b;
-  return strcasecmp(*s, *t);
-}
-
-static void reverse_lines(char **lineptr, size_t nlines)
-{
-  for (size_t i = 0; i < nlines / 2; ++i)
+  while (*s && !isdigit(*s) && !isalpha(*s) && !isspace(*s))
   {
-    size_t j = nlines - i - 1;
-    char *tmp = lineptr[i];
-    lineptr[i] = lineptr[j];
-    lineptr[j] = tmp;
+    ++s;
   }
+  return s;
+}
+
+static int cmp(const void *a, const void *b)
+{
+  const char *const *sp = a;
+  const char *const *tp = b;
+  const char *s = *sp;
+  const char *t = *tp;
+
+  int x;
+  if (numeric)
+  {
+    x = atoi(s) - atoi(t);
+  }
+  else
+  {
+    if (directory)
+    {
+      s = dirskip(s);
+      t = dirskip(t);
+    }
+    while ((case_insensitive ? tolower(*s) == tolower(*t) : *s == *t) && *s)
+    {
+      if (directory)
+      {
+        s = dirskip(s);
+        t = dirskip(t);
+      }
+      ++s;
+      ++t;
+    }
+    x = case_insensitive ? tolower(*s) - tolower(*t) : *s - *t;
+  }
+
+  if (reverse)
+  {
+    x = -x;
+  }
+  return x;
 }
 
 int main(int argc, char **argv)
 {
-  bool reverse = false;
-
-  int (*cmp)(const void *, const void *) = strcmp_void;
-
   while (--argc > 0 && (*++argv)[0] == '-')
   {
     char c;
@@ -64,13 +84,16 @@ int main(int argc, char **argv)
       switch (c)
       {
       case 'n':
-        cmp = numcmp;
+        numeric = true;
         break;
       case 'r':
         reverse = true;
         break;
+      case 'd':
+        directory = true;
+        break;
       case 'f':
-        cmp = strcasecmp_void;
+        case_insensitive = true;
         break;
       default:
         fprintf(stderr, "sort: illegal option %c\n", c);
@@ -105,11 +128,6 @@ int main(int argc, char **argv)
   }
 
   qsort((void **)lineptr, i, sizeof(lineptr[0]), cmp);
-
-  if (reverse)
-  {
-    reverse_lines(lineptr, i);
-  }
 
   for (size_t j = 0; j < i; ++j)
   {
