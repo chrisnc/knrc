@@ -59,6 +59,7 @@ programs = [
     ['find.c', getline],
     ['expr.c', vector],
     ['tail.c', getline],
+    'dcl.c',
 
     # Miscellaneous
     ['heapsort.c', heap, getline],
