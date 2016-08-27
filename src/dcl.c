@@ -164,7 +164,11 @@ static int gettoken(void)
   }
   else if (c == '[')
   {
-    for (*p++ = (char)c; (*p++ = (char)getch()) != ']';)
+    // Exercise 5-18. Make dcl recover from input errors.
+    // Not checking for EOF in the original causes a crash.
+    // TODO: probably need more extensive changes to make dcl robust
+    // to invalid input.
+    for (*p++ = (char)c; (c = getch()) != EOF && (*p++ = (char)c) != ']';)
     {
     }
     *p = '\0';
