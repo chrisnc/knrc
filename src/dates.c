@@ -109,8 +109,9 @@ int main(void)
     month_day(ymd_tests[i].y, yday, &m, &d);
     if (m != ymd_tests[i].m || d != ymd_tests[i].d)
     {
-      fprintf(stderr, "mismatched month/day after day_of_year -> month_day "
-                      "expected %d/%d, got %d/%d\n",
+      fprintf(stderr,
+              "mismatched month/day after day_of_year -> month_day "
+              "expected %d/%d, got %d/%d\n",
               ymd_tests[i].m, ymd_tests[i].d, m, d);
       continue;
     }
@@ -141,8 +142,9 @@ int main(void)
     int yday = day_of_year(yday_tests[i].y, m, d);
     if (yday != yday_tests[i].yday)
     {
-      fprintf(stderr, "mismatched day of year after month_day -> day_of_year "
-                      "expected %d, got %d\n",
+      fprintf(stderr,
+              "mismatched day of year after month_day -> day_of_year "
+              "expected %d, got %d\n",
               yday_tests[i].yday, yday);
       continue;
     }
