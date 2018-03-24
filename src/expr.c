@@ -82,6 +82,10 @@ static void push(double x)
 static double pop(void)
 {
   const double *p = vector_back_const(&stack);
+  if (!p)
+  {
+    return 0.0;
+  }
   double d = *p;
   vector_pop_back(&stack);
   return d;
