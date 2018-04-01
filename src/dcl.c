@@ -107,7 +107,7 @@ static int main_undcl(void)
   while (gettoken() != EOF)
   {
     strcpy(out, token);
-    while ((type = gettoken()) != '\n')
+    while ((type = gettoken()) != '\n' && type != EOF)
     {
       if (type == PARENS || type == BRACKETS)
       {
