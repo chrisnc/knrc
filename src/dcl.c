@@ -100,23 +100,9 @@ static int main_dcl(void)
   return 0;
 }
 
+// undcl: convert word description to declaration, page 126
 // Exercise 5-19. Modify undcl so that it does not add redundant parentheses to
 // declarations.
-static void show_pointer(char *s, int type, int npointer)
-{
-  bool need_parens = type == PARENS || type == BRACKETS;
-  strcpy(temp, need_parens ? "(" : "");
-  while (npointer > 0)
-  {
-    strcat(temp, "*");
-    --npointer;
-  }
-  strcat(temp, s);
-  strcat(temp, need_parens ? ")" : "");
-  strcpy(s, temp);
-}
-
-// undcl: convert word description to declaration, page 126
 static int main_undcl(void)
 {
   int type;
@@ -127,32 +113,47 @@ static int main_undcl(void)
     strcpy(out, token);
     while ((type = gettoken()) != '\n' && type != EOF)
     {
-      if (type == PARENS || type == BRACKETS)
+      switch (type)
       {
-        if (npointer)
-        {
-          show_pointer(out, type, npointer);
-          npointer = 0;
-        }
-        strcat(out, token);
-      }
-      else if (type == '*')
-      {
+      case '*':
         ++npointer;
-      }
-      else if (type == NAME)
-      {
+        break;
+
+      case PARENS:
+      case BRACKETS:
+      case NAME:
         if (npointer)
         {
-          show_pointer(out, type, npointer);
-          npointer = 0;
+          temp[0] = '\0';
+          while (npointer > 0)
+          {
+            strcat(temp, "*");
+            --npointer;
+          }
+          strcat(temp, out);
+          if (type == PARENS || type == BRACKETS)
+          {
+            sprintf(out, "(%s)", temp);
+          }
+          else
+          {
+            strcpy(out, temp);
+          }
         }
-        sprintf(temp, "%s %s", token, out);
-        strcpy(out, temp);
-      }
-      else
-      {
+        if (type == NAME)
+        {
+          sprintf(temp, "%s %s", token, out);
+          strcpy(out, temp);
+        }
+        else
+        {
+          strcat(out, token);
+        }
+        break;
+
+      default:
         printf("invalid input at %s\n", token);
+        break;
       }
     }
     printf("%s\n", out);
