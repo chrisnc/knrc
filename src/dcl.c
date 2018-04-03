@@ -1,4 +1,5 @@
 #include <ctype.h>
+#include <stdbool.h>
 #include <stdio.h>
 #include <string.h>
 
@@ -30,6 +31,7 @@ static int tokentype;
 static char token[MAXTOKEN];
 static char name[MAXTOKEN];
 static char datatype[MAXTOKEN];
+static char temp[MAXTOKEN];
 static char out[1000];
 
 static void dirdcl(void);
@@ -98,11 +100,27 @@ static int main_dcl(void)
   return 0;
 }
 
+// Exercise 5-19. Modify undcl so that it does not add redundant parentheses to
+// declarations.
+static void show_pointer(char *s, int type, int npointer)
+{
+  bool need_parens = type == PARENS || type == BRACKETS;
+  strcpy(temp, need_parens ? "(" : "");
+  while (npointer > 0)
+  {
+    strcat(temp, "*");
+    --npointer;
+  }
+  strcat(temp, s);
+  strcat(temp, need_parens ? ")" : "");
+  strcpy(s, temp);
+}
+
 // undcl: convert word description to declaration, page 126
 static int main_undcl(void)
 {
   int type;
-  char temp[MAXTOKEN];
+  int npointer = 0;
 
   while (gettoken() != EOF)
   {
@@ -111,15 +129,24 @@ static int main_undcl(void)
     {
       if (type == PARENS || type == BRACKETS)
       {
+        if (npointer)
+        {
+          show_pointer(out, type, npointer);
+          npointer = 0;
+        }
         strcat(out, token);
       }
       else if (type == '*')
       {
-        sprintf(temp, "(*%s)", out);
-        strcpy(out, temp);
+        ++npointer;
       }
       else if (type == NAME)
       {
+        if (npointer)
+        {
+          show_pointer(out, type, npointer);
+          npointer = 0;
+        }
         sprintf(temp, "%s %s", token, out);
         strcpy(out, temp);
       }
