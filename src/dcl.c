@@ -31,7 +31,6 @@ static int tokentype;
 static char token[MAXTOKEN];
 static char name[MAXTOKEN];
 static char datatype[MAXTOKEN];
-static char temp[MAXTOKEN];
 static char out[1000];
 
 static void dirdcl(void);
@@ -107,6 +106,7 @@ static int main_undcl(void)
 {
   int type;
   int npointer = 0;
+  char temp[MAXTOKEN];
 
   while (gettoken() != EOF)
   {
